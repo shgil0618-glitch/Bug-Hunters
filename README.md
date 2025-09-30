@@ -35,15 +35,14 @@
 ---
 
 ## 👥 팀원 소개
-<아직 주소 추가 안했습니다.>
 
 | 이름  | 역할 | GitHub                                                   |
 | --- | -- | -------------------------------------------------------- |
-| 길상현 | 팀장 | [github.com/honggildong](https://github.com/honggildong) |
-| 강서현 | 팀원 | [github.com/kimdev](https://github.com/kimdev)           |
-| 김영민 | 팀원 | [github.com/jungmin](https://github.com/jungmin)         |
-| 김정민 | 팀원 | [github.com/parkcode](https://github.com/parkcode)       |
-| 유희재 | 팀원 | [github.com/choidebug](https://github.com/choidebug)     |
+| 길상현 | 팀장 | [깃허브 보기](https://github.com/shgil0618-glitch/fullstack_gsh.git) |
+| 강서현 | 팀원 | [깃허브 보기](https://github.com/kangseoyun-s/fullstack_seohyun.git)           |
+| 김영민 | 팀원 | [깃허브 보기](https://github.com/jesusjoy10/fullstack_youngmin.git)         |
+| 김정민 | 팀원 | [깃허브 보기](https://github.com/kyoungsjjj0211/jeongmin001.git)       |
+| 유희재 | 팀원 | [깃허브 보기](https://github.com/ryu199212-coder/Fullstack_Ryu.git)     |
 
 
 ---
