@@ -75,4 +75,6 @@ git reset --hard HEAD-1
 ```
 git revert -m 
 ```
->>>>>>> 76e12829353cd3d8e63ccdd58fda5f7895623dd5
+
+
+revert test용
