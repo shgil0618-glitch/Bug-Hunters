@@ -1,6 +1,89 @@
 <img width="1510" height="879" alt="화면 캡처 2025-10-29 2033551" src="https://github.com/user-attachments/assets/de157fd7-89dd-4a2d-a40a-3741a1d7992a" />
 
 
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Smile, CloudRain, Sun, Utensils, Heart } from "lucide-react";
+
+export default function Home() {
+  const [mood, setMood] = useState(null);
+
+  const moods = [
+    { name: "기분 좋아요", icon: <Smile className="text-yellow-400" /> },
+    { name: "피곤해요", icon: <CloudRain className="text-blue-400" /> },
+    { name: "배고파요", icon: <Utensils className="text-red-400" /> },
+    { name: "우울해요", icon: <Heart className="text-pink-400" /> },
+  ];
+
+  const recommendations = [
+    {
+      title: "따뜻한 소고기 미역국",
+      desc: "피곤한 하루를 회복시켜주는 따뜻한 국물 요리",
+      img: "https://images.unsplash.com/photo-1617196039897-4e97d69ac5cc",
+    },
+    {
+      title: "상큼한 연어 샐러드",
+      desc: "기분이 우울할 때 활력을 주는 가벼운 샐러드",
+      img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+    },
+    {
+      title: "매콤한 제육덮밥",
+      desc: "스트레스 날려주는 인기 한식 메뉴",
+      img: "https://images.unsplash.com/photo-1598514982901-9e3f8e65d87a",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 to-white p-8">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-sky-700">🍽 오늘의 메뉴 추천</h1>
+        <input
+          type="text"
+          placeholder="재료나 음식을 검색하세요..."
+          className="border border-gray-300 rounded-full px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-sky-400"
+        />
+      </header>
+
+      <section className="text-center mb-10">
+        <h2 className="text-xl font-semibold mb-3 text-gray-700">오늘의 기분은 어떤가요?</h2>
+        <div className="flex justify-center gap-4 flex-wrap">
+          {moods.map((m) => (
+            <Button
+              key={m.name}
+              onClick={() => setMood(m.name)}
+              variant={mood === m.name ? "default" : "outline"}
+              className="flex items-center gap-2 px-4 py-2 text-lg rounded-full"
+            >
+              {m.icon} {m.name}
+            </Button>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
+          {mood ? `${mood}에 어울리는 추천 메뉴 🍱` : "AI 추천 인기 메뉴 🍱"}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {recommendations.map((food) => (
+            <Card key={food.title} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
+              <img src={food.img} alt={food.title} className="h-48 w-full object-cover rounded-t-2xl" />
+              <CardContent className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">{food.title}</h3>
+                <p className="text-sm text-gray-600 mt-2">{food.desc}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <footer className="mt-16 text-center text-sm text-gray-500">
+        © 2025 Team MenuMate | Data from 쿠팡 API & FatSecret | Made with 💙
+      </footer>
+    </div>
+  );
+}
 
 
 
