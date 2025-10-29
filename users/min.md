@@ -1,3 +1,11 @@
+<img width="1510" height="879" alt="화면 캡처 2025-10-29 2033551" src="https://github.com/user-attachments/assets/de157fd7-89dd-4a2d-a40a-3741a1d7992a" />
+
+
+
+
+
+
+
 ## 📂 포트폴리오 진행 예정
 
 ## 1. 주제 선정
