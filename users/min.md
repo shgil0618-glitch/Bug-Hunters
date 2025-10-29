@@ -1,6 +1,8 @@
 <img width="1510" height="879" alt="화면 캡처 2025-10-29 2033551" src="https://github.com/user-attachments/assets/de157fd7-89dd-4a2d-a40a-3741a1d7992a" />
 
 
+
+```
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,8 +11,8 @@ import { Smile, CloudRain, Sun, Utensils, Heart } from "lucide-react";
 export default function Home() {
   const [mood, setMood] = useState(null);
 
-  const moods = [
-    { name: "기분 좋아요", icon: <Smile className="text-yellow-400" /> },
+const moods = [ <!--mbti -->
+  { name: "기분 좋아요", icon: <Smile className="text-yellow-400" /> },
     { name: "피곤해요", icon: <CloudRain className="text-blue-400" /> },
     { name: "배고파요", icon: <Utensils className="text-red-400" /> },
     { name: "우울해요", icon: <Heart className="text-pink-400" /> },
@@ -84,6 +86,7 @@ export default function Home() {
     </div>
   );
 }
+```
 
 
 
