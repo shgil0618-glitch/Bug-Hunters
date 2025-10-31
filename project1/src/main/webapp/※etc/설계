@@ -1,0 +1,258 @@
+■ project001 - PART001) mvc1 (스파게티 코드)
+....... project001  멤버관리
+
+SQL> desc appuser
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ APP_USER_ID                               NOT NULL NUMBER(5)
+ EMAIL                                     NOT NULL VARCHAR2(100)
+ PASSWORD                                           VARCHAR2(100)
+ MBTI_TYPE_ID                                       NUMBER(3)
+ CREATED_AT                                         DATE
+ 
+1. dynamic web project  만들기 : project001
+2. ojdbc6.jar 파일 셋팅   			 
+3. [inc] - header.js / footer.jsp
+4.  mvc1 + preparedStatement
+	[member]- 회원가입 (join.jsp) , 로그인 (login.jsp)
+	회원가입폼    회원가입처리
+	join.jsp  → join_process.jsp     
+
+				action="join_process.jsp"
+				method="post"
+				name="email"   name="password"  name="mbti_type_id"
+
+	로그인폼		로그인처리				마이페이지
+	login.jsp  → login_process.jsp    → mypage.jsp 
+
+				action="login_process.jsp"
+				method="post"
+				name="email"   name="password"
+
+
+
+		| 컬럼명         | 데이터 타입       | 제약 조건       | 설명 |
+		|----------------|-------------------|------------------|------|
+		| `app_user_id`  | `NUMBER(5)`       | `PRIMARY KEY`    | 사용자 고유 ID |
+		| `email`        | `VARCHAR2(100)`   | `NOT NULL`       | 사용자 이메일 주소 |
+		| `password`     | `VARCHAR2(100)`   | —                | 사용자 비밀번호 |
+		| `mbti_type_id` | `NUMBER(3)`       | —                | MBTI 유형 ID (`mbti_type` 테이블 참조 가능) |
+		| `created_at`   | `DATE`            | —                | 가입일 |
+		| —              | —                 | `FOREIGN KEY`    | `mbti_type_id`는 `mbti_type(mbti_type_id)` 참조 가능 |
+		
+
+		SQL> desc Appuser
+		Name                                      Null?    Type
+		----------------------------------------- -------- ----------------------------
+		APP_USER_ID                               NOT NULL NUMBER(5)
+		EMAIL                                     NOT NULL VARCHAR2(100)
+		PASSWORD                                           VARCHAR2(100)
+		MBTI_TYPE_ID                                       NUMBER(3)
+		CREATED_AT                                         DATE
+
+
+		CREATE TABLE APPUSER(
+			APP_USER_ID  NUMBER NOT NULL PRIMARY KEY ,
+			EMAIL        VARCHAR2(100) NOT NULL   UNIQUE ,
+			PASSWORD     VARCHAR2(100) ,
+			MBTI_TYPE_ID NUMBER ,       
+			CREATED_AT   DATE ,
+			FOREIGN KEY (MBTI_TYPE_ID) REFERENCES appuser(MBTITYPE)
+		)
+
+5. 유용한기능들
+	5-1. mypage -  유형 1,2,3,  자바코드 추가
+	5-2. session : first님      MbtiBaord   /  로그인 회원가입
+	5-3. oracle - 시퀀스 : 테이블에서 숫자자동으로 카운트
+
+
+■ project001 -  PART002) mvc2  
+....... project001  BOARD
+
+1.  MVC1   VS  MVC2
+	1) 구성방식 ★ 
+	- MVC1 : JSP가  MODEL, VIEW, CONTROLLER 역할을 모두 수행
+	- MVC2 :        MODEL(JAVA), VIEW(JSP), CONTROLLER(서블릿) 분리
+
+	2) 유지보수성
+	- MVC1 : 낮음 ( JSP에 로직이 포함되어 재사용 어려움) - 간단한 웹
+	- MVC2 : 높음 ( MODEL , CONTRLLER의 재사용)       - 대규모
+
+2. MVC2
+	1) JAVA, SERVLET 
+	2) response 
+	3) board
+
+3. 프로젝트
+	1) dynamic web project  만들기 : project001              .... pass
+	2) ojdbc6.jar  / jstl.jar / standard.jar  파일 셋팅   	  .... pass 
+	3) [inc] - header.js / footer.jsp                       .... pass      
+	4) mvc2
+	
+	1. model
+	1-1. table
+	1-2. dto
+	1-3. dao
+	
+	2. view  - validator
+	
+	3. controller
+	3-1. frontcontroller - .do 경로 / view 연결확인
+	3-2. service 구조
+	3-3. service 각각 안에 코드처리
+	3-4. view 연동	
+	
+	▶model 
+		1. table (post) + sequence (post_seq)
+			| 컬럼명        | 데이터 타입       | 제약 조건       | 설명 |
+			|---------------|-------------------|------------------|------|
+			| `id`          | `NUMBER`          | `PRIMARY KEY`    | 게시글 고유 ID |
+			| `app_user_id` | `NUMBER`          | `NOT NULL`       | 작성자 ID (`appuser` 테이블 참조) |
+			| `title`       | `VARCHAR2(200)`   | `NOT NULL`       | 게시글 제목 |
+			| `content`     | `CLOB`            | `NOT NULL`       | 게시글 내용 (대용량 텍스트, 최대 4GB) |
+			| `pass`        | `VARCHAR2(100)`   | —                | 비회원 삭제용 비밀번호 |
+			| `created_at`  | `DATE`            | `DEFAULT SYSDATE`| 작성일 |
+			| `hit`         | `NUMBER`          | `DEFAULT 0`      | 조회수 |
+			| —             | —                 | `FOREIGN KEY`    | `app_user_id`는 `appuser(app_user_id)` 참조 |
+			create sequence  post_seq;
+
+			SQL> desc post
+			Name                                      Null?    Type
+			----------------------------------------- -------- ----------------------------
+			ID                                        NOT NULL NUMBER
+			APP_USER_ID                               NOT NULL NUMBER
+			TITLE                                     NOT NULL VARCHAR2(200)
+			CONTENT                                   NOT NULL CLOB
+			PASS                                               VARCHAR2(100)
+			CREATED_AT                                         DATE
+			HIT                                                NUMBER
+
+
+			CREATE TABLE post (
+				id        		NUMBER PRIMARY KEY,
+				app_user_id     NUMBER NOT NULL,              -- 작성자
+				title           VARCHAR2(200) NOT NULL,
+				content         CLOB NOT NULL,                -- 대용량 문자 데이터 타입 최대 4GB / varchar2는 4000바이트까지
+				pass		    VARCHAR2(100),                -- 비회원 삭제용 비밀번호
+				created_at      DATE DEFAULT SYSDATE,
+				hit             NUMBER DEFAULT 0, 
+				FOREIGN KEY (app_user_id) REFERENCES appuser(app_user_id)
+			);
+ 
+			create sequence post_seq;
+
+
+		3. dto
+			[com.thejoa703.dto] - PostDto
+
+		4. dao
+			[com.thejoa703.dao] - PostDao
+ 
+		........................................................................	
+			1. [글쓰기]글쓰기 sql : 
+				insert into post ( id                 , app_user_id ,title , content , pass )  
+						  values ( post_seq.nextval   ,          ?  , ?    ,      ?  ,    ? ) 
+				
+				public  int  insert( PostDto dto ){
+					int result=-1;
+					// 드 커 프 리
+					return result;
+				} 	  
+			
+			2. [전체보기]전체글가져오기 , appuser테이블에서  email 도 같이 가져오기  sql : 
+				SELECT		p.*     ,  u.email
+				FROM		post p  join appuser u	on  p.app_user_id= u.app_user_id 
+				
+				public  ArrayList<PostDto dto> selectAll(){
+					ArrayList<PostDto dto> result = new ArrayList<>();
+					// 드 커 프 리
+					return result;
+				}
+				
+			
+			3. [상세보기]글번호  해당하는 글가져오기 sql : 
+				select * from post  where id=?
+				update post  set  hit=hit+1  where  id=?
+				
+				public PostDto  select(int id){
+					PostDto result = new PostDto();
+					// 드 커 프 리
+					return result;
+				}
+				
+				public  int  update_hit( int id ){
+					int result = -1;
+					// 드 커 프 리
+					return result;
+				}
+			
+			4. 글수정하기 sql:
+				update post  set   title=?, content=?  where  id=?  and pass=?
+			
+				public  int  update( PostDto dto ){
+					int result = -1;
+					// 드 커 프 리
+					return result;
+				}
+			
+			5. 글번호  해당하는 삭제
+				delete from  post  where  id=?  and pass=?
+				
+				public  int  delete( PostDto dto ){
+					int result = -1;
+					// 드 커 프 리
+					return result;
+				} 
+ 
+		........................................................................
+  
+   
+	▶view
+		1. list.jsp
+		2. write.jsp
+		3. detail.jsp
+		4. edit.jsp
+		5. delete.jsp
+
+	▶controller
+		1. frontcontroller
+			1-1. @WebServlet 개발용     *.do   , *.member , *.hj
+			1-2. web.xml     배포용
+			
+			ㄴ index.jsp
+				ㄴ [전체글보기] /list.do        ■  MbtiList          /          mbtiBoard/list.jsp
+				ㄴ [글쓰기폼  ] /writeView.do   □                    /         mbtiBoard/write.jsp
+				ㄴ [글쓰기기능]  /write.do      ■  MbtiInsert        / 알림창 +  list.do
+				ㄴ [상세보기 ]   /detail.do     ■  MbtiDetail       /          mbtiBoard/detail.jsp 
+				ㄴ [글수정폼  ]  /editView.do   ■  MbtiUpdateView   /          mbtiBoard/edit.jsp  
+				ㄴ [글수정기능]   /edit.do        ■  MbtiUpdate      /  알림창 +  mbtiBoard/detail.jsp 
+				ㄴ [글삭제폼  ]  /deleteView.do □                    /         mbtiBoard/delete.jsp   
+				ㄴ [글삭제기능]   /delete.do      ■  MbtiDelete      /  알림창 +  list.do
+			
+			1-1. 	frontcontroller     web.xml    [com.thejoa703.controller] - MbtiController
+			1-2. 	view 연결확인
+				
+		2. service 
+			[com.thejoa703.service] 
+			MbtiService <<interface>>
+				△....  MbtiList      	데이터 x / selectAll()
+				△....  MbtiInsert       데이터 o / insert( PostDto dto )
+				△....  MbtiDetail 		데이터 o / select(int id) , update_hit( int id )
+				△....  MbtiUpdateView   데이터 o / select(int id)
+				△....  MbtiUpdate       데이터 o /  update( PostDto dto )
+				△....  MbtiDelete       데이터 o /  update( PostDto dto )
+				 
+		
+
+
+
+
+
+
+
+> 팀 포트폴리오 ( project1-  jsp + Oracle )
+
+
+
+
+
