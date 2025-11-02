@@ -1,5 +1,110 @@
-<img width="1510" height="879" alt="화면 캡처 2025-10-29 2033551" src="https://github.com/user-attachments/assets/de157fd7-89dd-4a2d-a40a-3741a1d7992a" />
 
+
+## 🍜 ② **FOOD_TB (음식 관리 담당)** **담당자:김정민 ** 
+
+음식 등록 / 수정 / 삭제 / 조회 | 컬럼명 | 타입 | 제약조건 | 설명 |
+| ----------- | ------------- | --------------- | ---------------------- | 
+| fid | NUMBER(6) | PK | 음식 고유번호 | 
+| name | VARCHAR2(100) | NOT NULL | 음식명 | 
+| category | VARCHAR2(50) | | 음식 카테고리 (한식, 양식, 중식, 일식 등) |
+| kcal | NUMBER(5) | | 칼로리 | | protein | NUMBER(5,1) | 
+| 단백질(g) | | carb | NUMBER(5,1) | | 탄수화물(g) | 
+| fat | NUMBER(5,1) | | 지방(g) | | recipe | CLOB | 
+| 조리 방법 | | image_url | VARCHAR2(200) | null | 음식 이미지 경로 |
+| reg_date | DATE | DEFAULT SYSDATE | 등록일 | 1 '삼겹살' '한식' '370kcal' '10' '100' '5' '조리설명' 'null' 
+
+
+알러지 제외 사유 : 배달의 민족, 만개의 레시피, 오늘의 레시피등 여러 사이트 레시피 사이트에서 요리에 알러지를 포함하는것이 아닌 재료에 알러지를 포함하기에 음식에서는 제외하였습니다.
+
+**CRUD 예시**
+* Create: 음식 등록 (관리자 페이지)
+* Read: 음식 리스트, 상세보기 -> 
+* Update: 영양소 수정, 이미지 변경
+* Delete: 음식 삭제 --
+ 
+food_id |	NUMBER(6)	| PK |	음식 고유번호 //1
+name |	VARCHAR2(100) |	NOT NULL |	음식명  //2
+category |	VARCHAR2(50)	|	               | 음식 카테고리  (한식, 양식 등) //3
+difficulty | VARCHAR2(20)	|                | 조리 난이도 (쉬움/보통/어려움) // * 추가 
+kcal |	NUMBER(5)	|	                       | 칼로리 //4
+protein |	NUMBER(5,1)	|                    |	단백질 // 5
+carb |	NUMBER(5,1)	|                      |	탄수화물 //6
+fat |	NUMBER(5,1)	|	                       | 지방 //7
+recipe |	CLOB	|	                         | 조리 방법 //8
+image_url |	VARCHAR2(200)	|	               | 음식 이미지 경로 //9
+like_count |	NUMBER(6)	| DEFAULT 0        | 좋아요 수 //추가
+reg_date | DATE | DEFAULT SYSDATE          | 등록일 // 삭제 개인이 업로드일경우 필요하겠지만, 관리자가 업로드 하는 방식일 경우 필요가 없음. 만개의 레시피 또한 개발자가 업로드 하는 방식, 또한 user_id를 메인table에서 만들어서  reg_date와 user_id를 연동해야함
+
+
+```
+create 삭제 사유
+예). INSERT INTO FOOD_TB 
+(food_id, user_id, name, category, kcal, protein, carb, fat, recipe, reg_date)
+VALUES (FOOD_SEQ.NEXTVAL, 'admin', '된장찌개', '한식', 300, 20, 10, 5, '조리방법...', SYSDATE);
+코드로 하나하나 업로드 해야하는 작업이기에 굳이 필요가 없음
+```
+
+
+
+```
+oracle table
+
+CREATE TABLE FOOD_TB (
+    food_id      NUMBER(6)        PRIMARY KEY,       -- 음식 고유번호 (PK)
+    name         VARCHAR2(100)    NOT NULL,          -- 음식명
+    category     VARCHAR2(50),                       -- 음식 카테고리 (예: 한식, 양식, 중식 등)
+    difficulty   VARCHAR2(20),                       -- 조리 난이도 (쉬움 / 보통 / 어려움)
+    kcal         NUMBER(5),                          -- 칼로리
+    protein      NUMBER(5,1),                        -- 단백질(g)
+    carb         NUMBER(5,1),                        -- 탄수화물(g)
+    fat          NUMBER(5,1),                        -- 지방(g)
+    recipe       CLOB,                               -- 조리 방법 (긴 텍스트)
+    image_url    VARCHAR2(200),                      -- 음식 이미지 경로
+    like_count   NUMBER(6)        DEFAULT 0          -- 좋아요 수 (기본값 0)
+);
+
+-- 🔹 SEQUENCE 생성: 음식 ID 자동 증가 시퀀스
+CREATE SEQUENCE FOOD_SEQ
+    START WITH 1          -- 시작값
+    INCREMENT BY 1        -- 1씩 증가
+    NOCACHE               -- 캐시 미사용 (테스트/학습용에 적합)
+    NOCYCLE;              -- 순환하지 않음
+
+
+-- 🔹 샘플 데이터 삽입 (테스트용)
+INSERT INTO FOOD_TB (
+    food_id, name, category, difficulty, kcal, protein, carb, fat, recipe, image_url
+) VALUES (
+    FOOD_SEQ.NEXTVAL, '된장찌개', '한식', '보통', 350, 18.5, 22.3, 10.2, '된장을 풀고 두부, 버섯, 애호박 등을 넣어 끓이는 전통 한식 요리입니다.', 'images/soybean_stew.jpg' );
+
+COMMIT;
+```
+
+
+
+* 
+
+* 
+
+
+FOOD_TB — 개선 제안 & 설명
+✅ 1️⃣ 추가하면 좋은 컬럼
+
+user_id	VARCHAR2(30) FK → USER_TB	음식을 "관리자"만 등록하는 게 아니라, 커뮤니티 기반으로 유저가 직접 음식/레시피를 등록할 수 있다면 누가 등록했는지를 알 수 있어야 함.
+
+like_count	NUMBER(6) DEFAULT 0	음식 상세보기에서 “좋아요” 기능이 붙을 가능성이 높음. 커뮤니티나 추천과 연동 가능.
+
+update_date	DATE	음식 정보 수정 시 최신 날짜를 반영하기 위함 (관리 편의성)
+
+difficulty	VARCHAR2(20)	레시피 난이도(“쉬움”, “보통”, “어려움”) 표현 가능. 
+
+cook_time	NUMBER(4)	조리 시간(분 단위) 저장 — 검색 필터(“30분 이하 요리”) 등에 활용 가능
+
+
+
+
+```<img width="1510" height="879" alt="화면 캡처 2025-10-29 2033551" src="https://github.com/user-attachments/assets/de157fd7-89dd-4a2d-a40a-3741a1d7992a" />
+```
 
 
 ```
