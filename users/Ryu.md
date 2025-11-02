@@ -85,3 +85,18 @@ daily_value|	INT|	1일 권장 섭취량
 |mbti	|VARCHAR	|MBTI 유형|
 |allergies	|TEXT|	알레르기 정보|
 |preferences|	TEXT|	선호 음식 키워드|
+
+
+------------------------------------
+# 숙제 테이블 만들기
+
+CREATE TABLE users (
+    id          VARCHAR2(30)     PRIMARY KEY,                 -- 사용자 고유 ID
+    password    VARCHAR2(100)    NOT NULL,                    -- 비밀번호 (암호화 저장)
+    nickname    VARCHAR2(50)     NOT NULL,                    -- 닉네임
+    email       VARCHAR2(100)    UNIQUE,                      -- 이메일 (로그인용)
+    preference  VARCHAR2(100),                                -- 선호 음식 or 식단 유형
+    allergy     CHAR(1),                                      -- 알러지 (추후 별도 테이블과 연동 예정)
+    join_date   DATE            DEFAULT SYSDATE               -- 가입일
+);
+
