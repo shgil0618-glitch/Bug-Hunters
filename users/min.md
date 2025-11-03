@@ -7,11 +7,16 @@
 | fid | NUMBER(6) | PK | 음식 고유번호 | 
 | name | VARCHAR2(100) | NOT NULL | 음식명 | 
 | category | VARCHAR2(50) | | 음식 카테고리 (한식, 양식, 중식, 일식 등) |
-| kcal | NUMBER(5) | | 칼로리 | | protein | NUMBER(5,1) | 
-| 단백질(g) | | carb | NUMBER(5,1) | | 탄수화물(g) | 
-| fat | NUMBER(5,1) | | 지방(g) | | recipe | CLOB | 
-| 조리 방법 | | image_url | VARCHAR2(200) | null | 음식 이미지 경로 |
-| reg_date | DATE | DEFAULT SYSDATE | 등록일 | 1 '삼겹살' '한식' '370kcal' '10' '100' '5' '조리설명' 'null' 
+| kcal | NUMBER(5) | | 칼로리 | 
+| protein | NUMBER(5,1) | | 단백질(g) | 
+| carb | NUMBER(5,1) | | 탄수화물(g) | 
+| fat | NUMBER(5,1) | | 지방(g) | 
+| recipe | CLOB | | 조리 방법 | 
+| image_url | VARCHAR2(200) | null | 음식 이미지 경로 |
+| reg_date | DATE | DEFAULT SYSDATE | 등록일 
+
+
+| 1 '삼겹살' '한식' '370kcal' '10' '100' '5' '조리설명' 'null' 
 
 
 알러지 제외 사유 : 배달의 민족, 만개의 레시피, 오늘의 레시피등 여러 사이트 레시피 사이트에서 요리에 알러지를 포함하는것이 아닌 재료에 알러지를 포함하기에 음식에서는 제외하였습니다.
