@@ -49,7 +49,7 @@
   <a href="<%=request.getContextPath()%>/" class="btn btn-primary">음식파트</a>
   <a href="<%=request.getContextPath()%>/" class="btn btn-primary">재료파트</a>
   <a href="<%=request.getContextPath()%>/" class="btn btn-primary">검색파트</a>
-  <a href="<%=request.getContextPath()%>/" class="btn btn-primary">게시판파트</a>
+  <a href="<%=request.getContextPath()%>/comunityList.co" class="btn btn-primary">게시판파트</a>
 </div>
 
    

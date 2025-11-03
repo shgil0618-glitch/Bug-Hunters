@@ -97,7 +97,15 @@ public class MbtiController extends HttpServlet {
 			 } else {
 				 out.println("<script>alert('비밀번호를 확인해주세요.'); history.go(-1) </script>");
 			 }
-		} 
+		 } 
+		//////////////////////////////////////////////////////////////////////////////////////////
+		 
+				
+
+			 
+			 
+
+		
 		 
 	}	
 	

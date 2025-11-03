@@ -31,7 +31,7 @@
 		  </div>
 		 </c:if>
 		  <div class="mb-3">
-		  	<a href="<%=request.getContextPath()%>/list.do" class="btn btn-primary form-control">목록보기</a>
+		  	<a href="<%=request.getContextPath()%>/list.do" class="btn btn-primary">목록보기</a>
 		  </div>	
 	 </div>
    </div> 

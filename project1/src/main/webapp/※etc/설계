@@ -140,6 +140,14 @@ SQL> desc appuser
 			);
  
 			create sequence post_seq;
+			
+			
+		c : 게시글 작성		- insert into controller (id,name,content) values (type_seq.nextval,?,?)
+		r : 게시글 전체 읽어오기	- select * from type
+			게시글 검색 읽어오기	- select * from type wgere 
+		u : 게시글 내용 수정	- update type set name=?, content=? where type_id=?;
+		d : 게시글 삭제		- delete from type where id=?
+		
 
 
 		3. dto

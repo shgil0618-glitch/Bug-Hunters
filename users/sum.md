@@ -173,7 +173,7 @@ USER2      1FK
 | 컬럼명          | 타입            | 제약조건                                        | 설명               |
 | ------------ | ------------- | ------------------------------------------- | ---------------- |
 | `postId`    | NUMBER(8)     | PK                                          | 게시글 ID           |
-| `userId`    | VARCHAR2(30)  | NOT NULL, FK → USER_TB(user_id)             | 작성자              |
+| `Id`    | VARCHAR2(30)  | NOT NULL, FK → USER_TB(Id)             | 작성자              |
 | `title`      | VARCHAR2(200) | NOT NULL                                    | 제목               |
 | `content`    | CLOB          | NOT NULL                                    | 본문 (레시피 내용)      |
 | `category`   | NUMBER  |    NOT NULL, FK →    category`             | 카테고리 번호 (1,2,3) |
