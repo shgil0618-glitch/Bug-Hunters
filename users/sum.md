@@ -21,17 +21,17 @@ CREATE TABLE users (
 
 음식 등록 / 수정 / 삭제 / 조회 | 컬럼명 | 타입 | 제약조건 | 설명 |
 | ----------- | ------------- | --------------- | ---------------------- | 
-    food_id      NUMBER(6)        PRIMARY KEY,       -- 음식 고유번호 (PK)
-    name         VARCHAR2(100)    NOT NULL,          -- 음식명
-    category     VARCHAR2(50),                       -- 음식 카테고리 (예: 한식, 양식, 중식 등)
-    difficulty   VARCHAR2(20),                       -- 조리 난이도 (쉬움 / 보통 / 어려움)
-    kcal         NUMBER(5),                          -- 칼로리
-    protein      NUMBER(5,1),                        -- 단백질(g)
-    carb         NUMBER(5,1),                        -- 탄수화물(g)
-    fat          NUMBER(5,1),                        -- 지방(g)
-    recipe       CLOB,                               -- 조리 방법 (긴 텍스트)
-    image_url    VARCHAR2(200),                      -- 음식 이미지 경로
-    like_count   NUMBER(6)        DEFAULT 0          -- 좋아요 수 (기본값 0)
+|    food_id  |   NUMBER(6)   |     PRIMARY KEY,|       -- 음식 고유번호 (PK)|
+|    name     |    VARCHAR2(100) |   NOT NULL,  |        -- 음식명     |
+|    category  |   VARCHAR2(50), |              |        -- 음식 카테고리 (예: 한식, 양식, 중식 등) |
+|    difficulty |  VARCHAR2(20), |               |       -- 조리 난이도 (쉬움 / 보통 / 어려움) |
+|    kcal    |     NUMBER(5),    |              |        -- 칼로리       |
+|    protein  |    NUMBER(5,1),  |              |        -- 단백질(g)    |
+|    carb     |    NUMBER(5,1),  |              |       -- 탄수화물(g)   |
+|    fat      |    NUMBER(5,1),  |              |        -- 지방(g)      |
+|    recipe   |    CLOB,         |              |         -- 조리 방법 (긴 텍스트)  |
+|    image_url |   VARCHAR2(200),|              |        -- 음식 이미지 경로  |
+|    like_count |  NUMBER(6)     |   DEFAULT 0  |        -- 좋아요 수 (기본값 0) |
 ---
 
 ## 🧄 ③ **INGREDIENT_TB (재료 관리 담당)** (김서현)
