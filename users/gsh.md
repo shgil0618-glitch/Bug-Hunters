@@ -1,5 +1,85 @@
 
+---
 
+## 🧩 수정된 테이블 설계
+
+### 🔸 `COMMUNITY_TB` — 레시피 공유 게시판
+
+| 컬럼명          | 타입            | 제약조건                                        | 설명               |
+| ------------ | ------------- | ------------------------------------------- | ---------------- |
+| `post_id`    | NUMBER(8)     | PK                                          | 게시글 ID           |
+| `user_id`    | VARCHAR2(30)  | NOT NULL, FK → USER_TB(user_id)             | 작성자              |
+| `title`      | VARCHAR2(200) | NOT NULL                                    | 제목               |
+| `content`    | CLOB          | NOT NULL                                    | 본문 (레시피 내용)      |
+| `category`   | VARCHAR2(50)  |                                             | 카테고리 (디저트, 한식 등) |
+| `views`      | NUMBER(6)     | DEFAULT 0                                   | 조회수              |  +
+| `likes`      | NUMBER(6)     | DEFAULT 0                                   | 좋아요 수            |
+| `created_at` | DATE          | DEFAULT SYSDATE                             | 작성일              |
+| `updated_at` | DATE          |                                             | 수정일              |+
+| `is_deleted` | varchar(2)    |                                             | 삭제 이력 관리      | +
+
+
+---
+
+### 🔸 `COMMUNITY_IMAGE_TB` — 게시글 이미지 (다중 이미지용)
+
+| 컬럼명          | 타입            | 제약조건                       | 설명     |
+| ------------ | ------------- | -------------------------- | ------ |
+| `image_id`   | NUMBER(8)     | PK                         | 이미지 ID |
+| `post_id`    | NUMBER(8)     | FK → COMMUNITY_TB(post_id) | 게시글 ID |
+| `image_url`  | VARCHAR2(300) | NOT NULL                   | 이미지 경로 |
+| `created_at` | DATE          | DEFAULT SYSDATE            | 등록일    |
+
+---
+
+### 🔸 `REVIEW_TB` — 음식 리뷰
+
+| 컬럼명          | 타입            | 제약조건                                        | 설명       |
+| ------------ | ------------- | ------------------------------------------- | -------- |
+| `review_id`  | NUMBER(8)     | PK                                          | 리뷰 ID    |
+| `user_id`    | VARCHAR2(30)  | NOT NULL, FK → USER_TB(user_id)             | 작성자      |
+| `food_id`    | NUMBER(6)     | NOT NULL, FK → FOOD_TB(food_id)             | 리뷰 대상 음식 |
+| `rating`     | NUMBER(2,1)   | CHECK (rating BETWEEN 0 AND 5)              | 별점       |
+| `comment`    | VARCHAR2(500) |                                             | 후기 내용    |
+| `like_count` | NUMBER(6)     | DEFAULT 0                                   | 좋아요 수    |+
+| `created_at` | DATE          | DEFAULT SYSDATE                             | 작성일      |
+| `updated_at` | DATE          |                                             | 수정일      |+
+| `is_deleted` | varchar(2)    |                                             | 삭제 이력 관리  |+
+
+---
+
+==============================================================================
+### `COMMUNITY_TB` — 레시피 공유 게시판
+
+| 컬럼명          | 타입            | 제약조건            | 설명                 |
+| ------------ | ------------- | --------------- | ------------------ |
+| `post_id`    | NUMBER(8)     | PK              | 게시글 번호             |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB    | 작성자                |
+| `title`      | VARCHAR2(200) | NOT NULL        | 제목                 |
+| `content`    | CLOB          | NOT NULL        | 내용 (레시피)           |
+| `image_url`  | VARCHAR2(200) |                 | 첨부 이미지             |   -
+| `category`   | VARCHAR2(50)  |                 | 레시피 유형 (디저트, 국물 등) |
+| `created_at` | DATE          | DEFAULT SYSDATE | 작성일                |
+| `views`      | NUMBER(6)     | DEFAULT 0       | 조회수                |
+| `likes`      | NUMBER(6)     | DEFAULT 0       | 좋아요 수              |
+
+자동 양식 채우는 건 선택 양식
+### `REVIEW_TB` — 음식/추천 평가
+
+| 컬럼명          | 타입            | 제약조건                           | 설명       |
+| ------------ | ------------- | ------------------------------ | -------- |
+| `review_id`  | NUMBER(8)     | PK                             | 리뷰 번호    |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB                   | 작성자      |
+| `food_id`    | NUMBER(6)     | FK → FOOD_TB                   | 리뷰 대상 음식 |
+| `rating`     | NUMBER(2,1)   | CHECK (rating BETWEEN 0 AND 5) | 별점       |
+| `comment`    | VARCHAR2(300) |                                | 후기       |
+| `created_at` | DATE          | DEFAULT SYSDATE                | 작성일      |
+
+
+
+
+====================================================================================================================
+====================================================================================================================
 # 📂 풀스택 개발자 포트폴리오 프로젝트 아이디어
 
 ---
