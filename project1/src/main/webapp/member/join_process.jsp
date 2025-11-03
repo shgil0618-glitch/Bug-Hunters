@@ -10,8 +10,8 @@
 	//0. 데이터 넘겨받기 - request.getParameter() 
 	String email    	= request.getParameter("email");
 	String password 	= request.getParameter("password");
-	int    mbti_type_id =  Integer.parseInt(request.getParameter("mbti_type_id")  ); 
-	out.println(email + "/" + password + "/" + mbti_type_id);  //form 실행 → 값넘어오는지 확인
+	String nickname 	= request.getParameter("nickname"); 
+	out.println(email + "/" + password + "/" + nickname);  //form 실행 → 값넘어오는지 확인
 	//드커프리
 	try{
 		//1. 드라이버연동
@@ -20,11 +20,12 @@
 		conn = DriverManager.getConnection(url, user, pass);
 		//3. PreparedStatement #
 		String sql = 
-		"insert into appuser (APP_USER_ID , EMAIL , PASSWORD , MBTI_TYPE_ID,CREATED_AT) values (appuser_seq.nextval,?,?,?,SYSDATE)";
+		"insert into appuser (APP_USER_ID , EMAIL , PASSWORD , nickname, CREATED_AT) values (appuser_seq.nextval,?,?,?,SYSDATE)";
 		pstmt = conn.prepareStatement(sql);   //기본값 - 오류날가능성 있음....? 겹치지 않게 카운트하는방법은?  시퀀스
 		pstmt.setString(1, email);	
 		pstmt.setString(2, password);	
-		pstmt.setInt(   3, mbti_type_id); 		
+		pstmt.setString(3, nickname); 		
+		pstmt.setString(4, mobile); 
 		//4. 결과 #  select - pstmt.executeQuery() / insert, update, delete - pstmt.executeUpdate()
 		int result = pstmt.executeUpdate();  // 실행한 줄수              주소표시창줄을 로그인폼으로   
 		if(result > 0){ out.println("<script> alert('회원가입성공!'); location.href='login.jsp'; </script>"); }

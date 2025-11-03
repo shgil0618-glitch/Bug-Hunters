@@ -12,16 +12,10 @@ public class PostDto {
 	private LocalDateTime   createdAt;
 	private int hit;
 	private String   email; 
+	private String   mobile;
 	// 생성자 / toString 
 	// ##2. getters+setters 
-	public PostDto() { super(); }
-	///////////////////////
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 	///////////////////////
 	public PostDto(int id, int appUserId, String title, String content, String pass, LocalDateTime createdAt, int hit) { super(); this.id = id; this.appUserId = appUserId; this.title = title; this.content = content; this.pass = pass; this.createdAt = createdAt; this.hit = hit; }
 	public PostDto(int id, int appUserId, String title, String content, String pass, LocalDateTime createdAt, int hit,
@@ -36,7 +30,12 @@ public class PostDto {
 		this.hit = hit;
 		this.email = email;
 	}
-	@Override public String toString() { return "PostDto [id=" + id + ", appUserId=" + appUserId + ", title=" + title + ", content=" + content + ", pass=" + pass + ", createdAt=" + createdAt + ", hit=" + hit + "]"; }
+	@Override
+	public String toString() {
+		return "PostDto [id=" + id + ", appUserId=" + appUserId + ", title=" + title + ", content=" + content
+				+ ", pass=" + pass + ", createdAt=" + createdAt + ", hit=" + hit + ", email=" + email + ", mobile="
+				+ mobile + "]";
+	}
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 	
@@ -75,6 +74,34 @@ public class PostDto {
 	}
 	public void setHit(int hit) {
 		this.hit = hit;
+	}
+	
+	public PostDto() { super(); }
+	///////////////////////
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public PostDto(int id, int appUserId, String title, String content, String pass, LocalDateTime createdAt, int hit,
+			String email, String mobile) {
+		super();
+		this.id = id;
+		this.appUserId = appUserId;
+		this.title = title;
+		this.content = content;
+		this.pass = pass;
+		this.createdAt = createdAt;
+		this.hit = hit;
+		this.email = email;
+		this.mobile = mobile;
 	}
 	
 }

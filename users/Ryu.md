@@ -97,7 +97,7 @@ CREATE TABLE users (
     email       VARCHAR2(100)    UNIQUE,                      -- 이메일 (로그인용)
     preference  VARCHAR2(100),                                -- 선호 음식 or 식단 유형
     allergy     CHAR(1),                                      -- 알러지 (추후 별도 테이블과 연동 예정)
-    join_date   DATE            DEFAULT SYSDATE               -- 가입일
+    joinDate   DATE            DEFAULT SYSDATE                -- 가입일
 );
 
 -(의무표시대상)
