@@ -34,6 +34,7 @@ CREATE TABLE users (
 |like_count |	NUMBER(6)	| DEFAULT 0        | 좋아요 수 //추가
 |reg_date | DATE | DEFAULT SYSDATE          | 등록일 // 삭제 개인이 업로드일경우 필요하겠지만, 관리자가 업로드 하는 방식일 경우 필요가 없음. 만개의 레시피 또한 개발자가 업로드 하는 방식, 또한 user_id를 메인table에서 만들어서  reg_date와 user_id를 연동해야함
 
+
 ---
 
 ## 🧄 ③ **INGREDIENT_TB (재료 관리 담당)** (김서현)
