@@ -331,4 +331,178 @@ ORDER BY cnt DESC FETCH FIRST 5 ROWS ONLY;
 ```
 
 ---
+# 🍽 스마트 푸드 플랫폼 – Oracle DB 설계 (CRUD 중심)
+
+---
+
+## 👤 ① **USER_TB (회원/유저 관리 담당)**
+
+**담당자:** 로그인·회원가입·마이페이지 CRUD
+
+| 컬럼명          | 타입            | 제약조건                        | 설명                          |
+| ------------ | ------------- | --------------------------- | --------------------------- |
+| `id`    | VARCHAR2(30)  | PK                          | 사용자 고유 ID                   |
+| `password`   | VARCHAR2(100) | NOT NULL                    | 비밀번호 (암호화 저장)               |
+| `nickname`       | VARCHAR2(50)  | NOT NULL                    |닉네임                    |
+| `email`      | VARCHAR2(100) | UNIQUE                      | 이메일 (로그인용)                  |
+| `preference` | VARCHAR2(100) |                             | 선호 음식 or 식단 유형 (비건, 다이어트 등) |
+| `allergy`    | CHAR(1) |                             | 알러지 테이블 추후 추가     |
+| `join_date`  | DATE          | DEFAULT SYSDATE             | 가입일                         |
+
+1   '1111'   'a'   '123@123'   'm'   '2025.01.01'   '육식'   'y'   '2025.10.31' ,'관리자'    
+
+
+
+🔹 **CRUD 예시**
+
+* Create: 회원가입
+* Read: 로그인, 내 정보 보기
+* Update: 프로필 수정, 비밀번호 변경
+* Delete: 회원 탈퇴
+
+---
+
+## 🍜 ② **FOOD_TB (음식 관리 담당)**
+
+**담당자:** 음식 등록 / 수정 / 삭제 / 조회
+
+| 컬럼명         | 타입            | 제약조건            | 설명                     |
+| ----------- | ------------- | --------------- | ---------------------- |
+| `fid`   | NUMBER(6)     | PK              | 음식 고유번호                |
+| `name`      | VARCHAR2(100) | NOT NULL        | 음식명                    |
+| `category`  | VARCHAR2(50)  |                 | 음식 카테고리 (한식, 양식, 중식, 일식 등) |
+| `kcal`      | NUMBER(5)     |                 | 칼로리                    |
+| `protein`   | NUMBER(5,1)   |                 | 단백질(g)                 |
+| `carb`      | NUMBER(5,1)   |                 | 탄수화물(g)                |
+| `fat`       | NUMBER(5,1)   |                 | 지방(g)                  |
+| `recipe`    | CLOB          |                 | 조리 방법                  |
+| `image_url` | VARCHAR2(200) |       null          | 음식 이미지 경로              |
+| `reg_date`  | DATE          | DEFAULT SYSDATE | 등록일                    |
+ 
+ 알러지 알아서 추가하세요 ^^
+1   '삼겹살'   '한식'   '370kcal'      '10'   '100'   '5'    '조리설명'      'null'    '2025.01.01'
+
+🔹 **CRUD 예시**
+
+* Create: 음식 등록 (관리자 페이지)
+* Read: 음식 리스트, 상세보기
+* Update: 영양소 수정, 이미지 변경
+* Delete: 음식 삭제
+
+---
+
+## 🧄 ③ **INGREDIENT_TB (재료 관리 담당)**
+
+**담당자:** 재료 등록 / 수정 / 삭제 / 음식-재료 매핑 관리
+
+| 컬럼명             | 타입            | 제약조건            | 설명                     |
+| --------------- | ------------- | --------------- | ---------------------- |
+| `ingredient_id` | NUMBER(6)     | PK              | 재료 고유번호                |
+| `name`          | VARCHAR2(100) | NOT NULL        | 재료명                    |
+| `type`          | VARCHAR2(50)  |                 | 종류 (채소, 육류, 해산물, 소스 등) |
+| `kcal_per_100g` | NUMBER(5)     |                 | 100g당 칼로리              |
+| `allergy_flag`  | CHAR(100)       |                 | 알러지 종류              |
+| `created_at`    | DATE          | DEFAULT SYSDATE | 등록일                    |
+
+
+
+1   '돼지'   '육류'   '370'      'y'   '2025.01.01'
+2   '배추'   '채소'   '50'      'y'   '2025.01.01'
+
+
+### 📦 음식-재료 매핑 테이블 (N:N 관계)
+#### `FOOD_INGREDIENT_TB`
+
+| 컬럼명             | 타입           | 제약조건               | 설명                     |
+| --------------- | ------------ | ------------------ | ---------------------- |
+| `food_id`       | NUMBER(6)    | FK → FOOD_TB       | 음식 ID                  |
+| `ingredient_id` | NUMBER(6)    | FK → INGREDIENT_TB | 재료 ID                  |
+| `amount`        | VARCHAR2(50) |                    | 사용량 (예: “200g”, “1큰술”) |
+
+10   2   '370'
+10   2   '370'
+
+
+🔹 **CRUD 예시**
+
+* Create: 재료 등록, 음식-재료 매핑 추가
+* Read: 재료별 사용 음식 조회
+* Update: 재료 정보 수정
+* Delete: 재료 삭제
+
+---
+
+## 🔍 ④ **RECOMMEND_TB / SEARCH_LOG_TB (추천 & 검색 담당)**
+
+**담당자:** 메뉴 추천, 검색 히스토리 저장, AI 피드백
+
+### `RECOMMEND_TB`
+
+| 컬럼명          | 타입            | 제약조건            | 설명                     |
+| ------------ | ------------- | --------------- | ---------------------- |
+| `rec_id`     | NUMBER(8)     | PK              | 추천 고유번호                |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB    | 사용자 ID                 |
+| `food_id`    | NUMBER(6)     | FK → FOOD_TB    | 추천된 음식                 |
+| `type`       | VARCHAR2(30)  |                 | 추천 유형 (AI, 랜덤, 재료기반 등) |
+| `feedback`   | VARCHAR2(200) |          null      | AI 피드백 (예: 단백질 부족)     |
+| `created_at` | DATE          | DEFAULT SYSDATE | 추천 일시                  |
+
+1   1   1   
+
+
+### `SEARCH_LOG_TB`
+
+| 컬럼명          | 타입            | 제약조건            | 설명                |
+| ------------ | ------------- | --------------- | ----------------- |
+| `search_id`  | NUMBER(8)     | PK              | 검색 기록 ID          |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB    | 사용자 ID            |
+| `keyword`    | VARCHAR2(100) |                 | 검색 키워드            |
+| `filter`     | VARCHAR2(100) |                 | 필터 조건 (비건, 고단백 등) |
+| `created_at` | DATE          | DEFAULT SYSDATE | 검색 시각             |
+
+🔹 **CRUD 예시**
+
+* Create: 추천 결과 저장, 검색 로그 기록
+* Read: “나의 추천 기록”, “최근 검색어”
+* Update: 피드백 내용 수정
+* Delete: 오래된 기록 삭제
+
+---
+
+## 🧑‍🍳 ⑤ **COMMUNITY_TB / REVIEW_TB (커뮤니티 담당)**
+
+**담당자:** 게시글/리뷰 CRUD
+
+### `COMMUNITY_TB` — 레시피 공유 게시판
+
+| 컬럼명          | 타입            | 제약조건            | 설명                 |
+| ------------ | ------------- | --------------- | ------------------ |
+| `post_id`    | NUMBER(8)     | PK              | 게시글 번호             |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB    | 작성자                |
+| `title`      | VARCHAR2(200) | NOT NULL        | 제목                 |
+| `content`    | CLOB          | NOT NULL        | 내용 (레시피)           |
+| `image_url`  | VARCHAR2(200) |                 | 첨부 이미지             |
+| `category`   | VARCHAR2(50)  |                 | 레시피 유형 (디저트, 국물 등) |
+| `created_at` | DATE          | DEFAULT SYSDATE | 작성일                |
+| `views`      | NUMBER(6)     | DEFAULT 0       | 조회수                |
+| `likes`      | NUMBER(6)     | DEFAULT 0       | 좋아요 수              |
+
+자동 양식 채우는 건 선택 양식
+### `REVIEW_TB` — 음식/추천 평가
+
+| 컬럼명          | 타입            | 제약조건                           | 설명       |
+| ------------ | ------------- | ------------------------------ | -------- |
+| `review_id`  | NUMBER(8)     | PK                             | 리뷰 번호    |
+| `user_id`    | VARCHAR2(30)  | FK → USER_TB                   | 작성자      |
+| `food_id`    | NUMBER(6)     | FK → FOOD_TB                   | 리뷰 대상 음식 |
+| `rating`     | NUMBER(2,1)   | CHECK (rating BETWEEN 0 AND 5) | 별점       |
+| `comment`    | VARCHAR2(300) |                                | 후기       |
+| `created_at` | DATE          | DEFAULT SYSDATE                | 작성일      |
+
+🔹 **CRUD 예시**
+
+* Create: 게시글 등록, 리뷰 작성
+* Read: 게시판 목록, 리뷰 조회
+* Update: 게시글 수정, 후기 수정
+* Delete: 게시글/댓글 삭제
 
