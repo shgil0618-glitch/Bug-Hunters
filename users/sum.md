@@ -186,7 +186,6 @@ question(질문), choice(진단), foodtype / energytype(음식정보), CUPANGDAT
 | 사용자 선호   | user_food_pref         | 사용자 음식 선호 기록           |
 | 추천       | recommendation_history | 추천 메뉴와 추천 이유 기록        |
 | 일정 & 기분  | schedule               | 사용자의 일정 기록             |
-| 〃        | mood                   | 사용자의 감정 기록             |
 | 커뮤니티     | review                 | 메뉴 리뷰                  |
 | 〃        | comment                | 리뷰 댓글                  |
 | 〃        | user_like              | 좋아요/추천 기능              |
