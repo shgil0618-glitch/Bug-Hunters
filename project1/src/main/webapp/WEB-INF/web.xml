@@ -11,25 +11,26 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.xhtml</welcome-file>
   </welcome-file-list>
-   
-  <servlet>
-  	<servlet-name>MbtiController</servlet-name>
-  	<servlet-class>com.thejoa703.controller.MbtiController</servlet-class>
-  </servlet> 
-   
-  <servlet-mapping>
-  	<servlet-name>MbtiController</servlet-name>
-  	<url-pattern>*.do</url-pattern>
-  </servlet-mapping> 
   
-  <servlet>
-  	<servlet-name>ComunityController</servlet-name>
-  	<servlet-class>com.thejoa703.controller.ComunityController</servlet-class>
-  </servlet> 
-   
+<!--   <servlet>
+  <servlet-name>MbtiController</servlet-name>
+  <servlet-class>com.thejoa703.controller.MbtiController</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
-  	<servlet-name>ComunityController</servlet-name>
-  	<url-pattern>*.co</url-pattern>
+  <servlet-name>MbtiController</servlet-name>
+  <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+ -->
+
+  <servlet>
+  <servlet-name>ComuController</servlet-name>
+  <servlet-class>com.thejoa703.controller.ComuController</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+  <servlet-name>ComuController</servlet-name>
+  <url-pattern>*.co</url-pattern>
+  </servlet-mapping>
 </web-app>
+

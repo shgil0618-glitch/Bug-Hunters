@@ -22,6 +22,15 @@
 				<option value="1">ISTJ</option>
 				<option value="2">ISFJ</option>
 				<option value="3">INFJ</option>
+				<option value="4">ISTJ</option>
+				<option value="5">ISTP</option>
+				<option value="6">ISFP</option>
+				<option value="7">INFP</option>
+				<option value="8">INTP</option>
+				<option value="9">ESTP</option>
+				<option value="10">ESFP</option>
+				<option value="11">ENFP</option>
+				<option value="12">ENTP</option>
 			</select>
 			
 		</div>
