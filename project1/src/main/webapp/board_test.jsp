@@ -1,3 +1,6 @@
+<%@page import="com.thejoa703.dto.ComuDto"%>
+<%@page import="com.thejoa703.dao.ComuDao"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,74 +17,78 @@
 <body>
    <div class="container card  my-5">
       <h3  class="card-header"> DAO TEST </h3>
-	  <pre  class="alert alert-success">
-	  1. insert
-	  
-	     insert into post ( id                 , app_user_id ,title , content , pass )  
-         values ( post_seq.nextval   ,          ?  , ?    ,      ?  ,    ? ) 
+	  <pre class="alert alert_success">1. insert
 	  </pre>
-	  <%@page import="com.thejoa703.dao.PostDao"%>
-	  <%@page import="com.thejoa703.dto.PostDto"%>
-<%--  	  <%
-	  PostDao dao = new PostDao();
-	  PostDto dto = new PostDto();
-	  dto.setAppUserId(1);
+
+ 	  <%-- <%
+      ComuDao dao = new ComuDao();
+	  ComuDto dto = new ComuDto();
+	  
 	  dto.setTitle("첫번째 글쓰기입니다.");
 	  dto.setContent("내용");
-	  dto.setPass("1111");
-	  out.println(    dao.insert(dto)  );   //1나오면 글쓰기 성공!
-	  %>  --%> 
-	  
-	  <pre  class="alert alert-success">
-	  2. selectAll
-	  </pre>
-<%-- 	  <%
-	  PostDao dao = new PostDao();
-	  out.println(dao.selectAll());  
+	  dto.setCategoryId(1);
+	  dto.setId(1);
+	  out.println(dao.insert(dto));
+
 	  %> --%>
 	  
- 	  <pre  class="alert alert-success">
+	 
+	  <pre class="alert alert-success">
+	  2. select all
+	  </pre>
+   
+	  <%-- <%
+	  ComuDao dao = new ComuDao();
+	  out.println(dao.selectAll());
+	  %>  --%>
+	 
+
+	  
+	  
+	  <pre class="alert alert-success">
 	  3. select
 	  </pre>
-<%-- 	  <%
-	  PostDao dao = new PostDao(); 
-	  out.println(dao.update_hit(4));
-	  out.println(dao.select(4));    // 번호는 있는번호로
-	  %> --%>
+	
+	 <%-- <%
+	  ComuDao dao = new ComuDao();
+	  out.println(dao.update_views(1));
+	  out.println(dao.select(1));
+	  %>  --%>
+ 
 	  
-	  <pre  class="alert alert-success">
+	  <pre class="alert alert-success">
 	  3. update
 	  </pre>
-	  <%
-	  PostDao dao = new PostDao(); 
-	  PostDto dto = new PostDto();
-	  dto.setTitle("첫번째 글쓰기입니다.-new");
+  
+	 <%--  <%
+	  ComuDao dao = new ComuDao();
+	  ComuDto dto = new ComuDto();
+	  dto.setTitle("첫번째 글쓰기입니다.new");
 	  dto.setContent("내용-new");
-	  dto.setPass("123");
-	  dto.setId(3);
-	  out.println(dao.update(dto));  
-	  %>
-	  	  
-	  <pre  class="alert alert-success">
+	  dto.setCategoryId(2);
+	  dto.setPostId(1);
+	  dto.setId(1);
+	  out.println(dao.update(dto));
+	 %>  --%>
+		
+
+		
+		
+
+
+	   
+	   <pre class="alert alert-success">
 	  4. delete
 	  </pre>
-<%--  	  <%
-	  PostDao dao = new PostDao(); 
-	  PostDto dto = new PostDto(); 
-	  dto.setPass("123");
-	  dto.setId(3);
-	  out.println(dao.delete(dto));  
-	  %>  --%>
+	 <%-- <%
+	 ComuDao dao = new ComuDao();
+	 ComuDto dto = new ComuDto();
+	  dto.setPostId(1);
+	  dto.setId(1);
+	  out.println(dao.delete(dto));
+	  %>  --%> 
+
+	  
    </div>
 </body>
 </html>
-
-<!-- board_test.jsp -->
-
-
-
-
-
-
-
-

@@ -1,0 +1,37 @@
+[설계]
+
+view
+    1. list.jsp
+    2. write.jsp
+    3. detail.jsp
+    4. deit.jsp
+    5. delete.jsp
+
+controller
+    1. frontcontroller
+        1-1. @webservlet 개발용     *.do, *.member, *.gsh
+        1-2. web.xml     배포용           
+        [com.thejoa703.controller] - MbtiController
+        ㄴ index.jsp
+            ㄴ [전체글보기]/MBTIboard/list.do           ■ MbtiList /           MbTIBoard/list.jsp
+            ㄴ [글쓰기폼]/MBTIboard/writeView.do        □           /         MbTIBoard/write.jsp
+            ㄴ [글쓰기기능]/MBTIboard/write.do          ■ MbtiInsert /알림창 + list.do
+            ㄴ [상세보기]/MBTIboard/detail.do           ■ MbtiDetail /        MbTIBoard/detail.jsp
+            ㄴ [글수정폼]/MBTIboard/editView.do         ■ MbtiUpdateView /    MbTIBoard/edit.jsp
+            ㄴ [글수정기능]/MBTIboard/edit.do           ■ MbtiUpdate /알림창 + MbTIBoard/detail.jsp
+            ㄴ [글수정폼]/MBTIboard/deleteView.do       □           /         MbTIBoard/delete.jsp
+            ㄴ [글수정삭제]/MBTIboard/delete.do         ■ MbtiDelete /알림창 + list.do
+            
+        1-1. frontcontroller web.xml	[com.thejoa703.controller] - MbtiController
+        1-2. view 연결확인
+
+    2. service
+        [com.thejoa703.service]
+        MbtiService <<interface>>
+            △... MbtiList			데이터 x / dao.selectAll()
+            △... MbtiInsert			데이터 o / selectAll() / insert(PostDto dto)
+            △... MbtiDetail			데이터 o / insert(int id) , update_hit(int id)
+            △... MbtiUpdateview		데이터 o / select(int id)
+            △... MbtiUpdate			데이터 o / update(PostDto dto)
+            △... MbtiDelete			데이터 o / update(PostDto dto)
+
