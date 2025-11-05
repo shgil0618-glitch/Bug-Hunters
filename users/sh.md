@@ -70,7 +70,6 @@ CREATE TABLE INGREDIENT (
     allergy_flag     VARCHAR2(100),                                       -- 알러지 정보 (쉼표로 구분 가능)
     created_at       DATE DEFAULT SYSDATE,                                -- 등록일
     updated_at       DATE DEFAULT SYSDATE,                                -- 수정일
-    is_active        CHAR(1) DEFAULT 'Y' CHECK (is_active IN ('Y','N'))   -- 사용 여부
 );
 
 
