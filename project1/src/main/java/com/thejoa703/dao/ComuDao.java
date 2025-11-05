@@ -77,8 +77,7 @@ public class ComuDao {
 // 2. [전체보기]전체게시글 가져오기
 	 public  ArrayList<ComuDto> selectAll(){
          ArrayList<ComuDto> result = new ArrayList<>();
-         String sql = " SELECT      *     "
-                    + " FROM      COMMUNITY_TB " + "ORDER BY postId DESC";
+         String sql = " SELECT      *      FROM      COMMUNITY_TB  ORDER BY postId DESC";
          // 드 커 프 리
          Connection conn = null; PreparedStatement pstmt = null;  ResultSet rset = null;
          String driver="oracle.jdbc.driver.OracleDriver";
@@ -273,5 +272,9 @@ public class ComuDao {
 			 }
 			 return result;
 			  }
+ 
 
 }
+
+
+

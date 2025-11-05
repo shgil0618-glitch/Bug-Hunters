@@ -6,7 +6,6 @@
     <div class="card shadow-lg border-0">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0">커뮤니티 게시판</h4>
-            <a href="writeView.co" class="btn btn-light btn-sm">글쓰기</a>
         </div>
 
         <div class="card-body p-0">
@@ -22,9 +21,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="dto" items="${list}">
+                    <c:forEach var="dto" items="${list}" varStatus = "status">
                         <tr>
-                            <td>${dto.postId}</td>
+                            <%-- <td>${dto.postId}</td>  --%>
+                            <td>${list.size() - status.index}</td>
                             <td class="text-start ps-3">
                                 <a href="<%=request.getContextPath()%>/detail.co?postId=${dto.postId}" 
                                    class="text-decoration-none fw-semibold text-dark">
@@ -46,6 +46,11 @@
             </table>
         </div>
     </div>
+    <% if(email != null){%>
+	  <p class="text-end my-3"><a href="<%=request.getContextPath()%>/writeView.co" class="btn btn-primary">글쓰기</a></p>	
+   	<%}else {%>
+   		<p class="alert alert-primary ">로그인을 하면 글쓰기가 가능합니다.</p>
+   	<%} %>
 </div>
 
 <%@include file="../inc/footer.jsp" %>

@@ -10,7 +10,8 @@ public class ComuDto {
 	private int categoryId;
 	private int   views;
 	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;  
+	
 	public ComuDto() {
 		super();
 		// TODO Auto-generated constructor stub
