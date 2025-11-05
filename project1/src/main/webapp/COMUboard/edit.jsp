@@ -12,7 +12,7 @@
     <!-- 작성자 -->
     <div class="mb-3 mt-3">
       <label for="id" class="form-label">작성자 ID:</label>
-      <input type="text" class="form-control" id="id" name="id" value="${dto.id}">
+      <input type="text" class="form-control" id="id" name="id" value="${dto.id}"  readonly>
     </div>
 
     <!-- 제목 -->

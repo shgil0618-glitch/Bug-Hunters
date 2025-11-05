@@ -49,3 +49,18 @@
 </div>
 
 <%@ include file="../inc/footer.jsp" %>
+
+<!-- [ communityBoard - write.jsp ] -->
+
+
+<%-- <%@include file="../inc/header.jsp" %>
+<h2>글쓰기</h2>
+<form action="write.co" method="post">
+    작성자 ID: <input type="text" name="id"><br>
+    제목: <input type="text" name="title"><br>
+    내용: <textarea name="content" rows="5" cols="50"></textarea><br>
+    카테고리: <input type="text" name="categoryId"><br>
+    <input type="submit" value="등록">
+</form>
+<a href="list.co">목록으로</a>
+<%@include file ="../inc/footer.jsp" %> --%>

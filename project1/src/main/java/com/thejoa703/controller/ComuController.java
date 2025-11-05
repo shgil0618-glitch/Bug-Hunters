@@ -99,7 +99,10 @@ public class ComuController extends HttpServlet{
 		} else if(path.equals("/deleteView.co")) {
 			//□           /         MbTIBoard/delete.jsp
 			request.getRequestDispatcher("COMUboard/delete.jsp").forward(request, response);
-		} else if(path.equals("/delete.co")) {
+		} else if (path.equals("/deleteView.co")) {
+			
+		}
+		else if(path.equals("/delete.co")) {
 			//■ MbtiDelete /알림창 + list.do
 			service = new ComuDelete();  service.exec(request, response);
 			int postId = Integer.parseInt(request.getParameter("postId"));
