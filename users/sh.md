@@ -76,6 +76,8 @@ CREATE TABLE INGREDIENT (
 
 
 
+
+
 -- 1. 돼지고기 (육류)
 INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
 VALUES (1, '돼지고기', '육류', 370, '돼지고기', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
