@@ -56,3 +56,44 @@ SNS 기능: 플레이 후기 공유, 친구 매칭, 랭킹Flutter 활용: 게임
 | 〃        | user_like              | 좋아요/추천 기능              |
 | 영양 관리    | nutrition              | 음식 영양 정보               |
 | 〃        | daily_intake           | 사용자의 일일 섭취 기록          |
+
+
+
+
+
+
+CREATE TABLE INGREDIENT (
+    ingredient_id    NUMBER(6)        CONSTRAINT pk_ingredient PRIMARY KEY,   -- 재료 고유번호
+    name             VARCHAR2(100)    CONSTRAINT nn_ingredient_name NOT NULL, -- 재료명
+    type             VARCHAR2(50),                                         -- 종류 (채소, 육류, 해산물, 소스 등)
+    kcal_per_100g    NUMBER(5),                                            -- 100g당 칼로리
+    allergy_flag     VARCHAR2(100),                                       -- 알러지 정보 (쉼표로 구분 가능)
+    created_at       DATE DEFAULT SYSDATE,                                -- 등록일
+    updated_at       DATE DEFAULT SYSDATE,                                -- 수정일
+);
+
+
+
+
+
+
+-- 1. 돼지고기 (육류)
+INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
+VALUES (1, '돼지고기', '육류', 370, '돼지고기', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+
+-- 2. 배추 (채소)
+INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
+VALUES (2, '배추', '채소', 50, NULL, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+
+-- 3. 대하 (해산물)
+INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
+VALUES (3, '대하', '해산물', 90, '갑각류', TO_DATE('2025-01-02', 'YYYY-MM-DD'));
+
+-- 4. 간장 (소스)
+INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
+VALUES (4, '간장', '소스', 65, '대두,밀', TO_DATE('2025-01-02', 'YYYY-MM-DD'));
+
+-- 5. 달걀 (기타 단백질)
+INSERT INTO INGREDIENT (ingredient_id, name, type, kcal_per_100g, allergy_flag, created_at)
+VALUES (5, '달걀', '단백질', 155, '계란', TO_DATE('2025-01-03', 'YYYY-MM-DD'));
+
