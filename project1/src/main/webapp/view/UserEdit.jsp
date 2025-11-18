@@ -1,0 +1,69 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../inc/header.jsp"%>
+
+<div class="container mt-5">
+   <div class="card shadow-sm">
+      <div class="card-body">
+         <h3 class="card-title text-center mb-4">정보 수정 요청</h3>
+
+         <form id="editForm" action="edit.do" method="post">
+            <input type="hidden" name="email" value="${user.EMAIL}">
+
+            <div class="mb-3">
+               <label class="form-label">닉네임</label> <input type="text"
+                  name="nickname" value="${user.NICKNAME}" class="form-control"
+                  pattern="^[가-힣a-zA-Z0-9]{2,10}$"
+                  title="닉네임은 한글, 영문, 숫자 2~10글자만 가능합니다." required>
+            </div>
+
+            <div class="mb-3">
+               <label class="form-label">비밀번호</label> <input type="password"
+                  name="password" placeholder="새 비밀번호 입력" class="form-control"
+                  pattern="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,20}$"
+                  title="비밀번호는 영문, 숫자, 특수문자를 포함한 8~20자리여야 합니다." required>
+            </div>
+
+            <div class="mb-3">
+               <label class="form-label">휴대폰</label> <input type="text"
+                  name="mobile" value="${user.MOBILE}" class="form-control"
+                  pattern="^01[0-9]{8,9}$"
+                  title="휴대폰 번호는 010으로 시작하는 10~11자리 숫자여야 합니다." required>
+            </div>
+
+            <div class="d-grid">
+               <input type="submit" value="회원정보 수정" class="btn btn-primary">
+            </div>
+         </form>
+
+
+
+         <div class="text-center mt-4">
+            <a href="main.do" class="btn btn-outline-secondary me-2">메인으로</a> <a
+               href="deleteForm.do" class="btn btn-outline-danger">회원탈퇴</a>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   document
+         .getElementById("editForm")
+         .addEventListener(
+               "submit",
+               function(event) {
+                  // 모든 input 요소 가져오기
+                  const inputs = this
+                        .querySelectorAll("input[type=text], input[type=password]");
+                  for (let i = 0; i < inputs.length; i++) {
+                     if (!inputs[i].value.trim()) {
+                        alert("빈칸을 모두 입력해주세요.");
+                        inputs[i].focus(); // 커서를 해당 빈칸으로 이동
+                        event.preventDefault(); // 폼 제출 막기
+                        return false; // 첫 번째 빈칸에서 멈춤
+                     }
+                  }
+               });
+</script>
+
+<%@ include file="../inc/footer.jsp"%>

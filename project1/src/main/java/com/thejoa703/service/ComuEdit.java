@@ -20,7 +20,7 @@ public class ComuEdit implements ComuService {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-		 int postId = Integer.parseInt(request.getParameter("postId")); 
+		int postId = Integer.parseInt(request.getParameter("postId")); 
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 	

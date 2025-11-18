@@ -5,28 +5,27 @@
 <div class="container card my-5 p-4">
   <h3 class="card-header">커뮤니티 글수정</h3>
 
-  <form action="${pageContext.request.contextPath}/edit.co" method="post">
+  <form action="${pageContext.request.contextPath}/edit.co" method="post" onsubmit="return validateEditForm()">
     <!-- 글번호 -->
     <input type="hidden" name="postId" value="${dto.postId}">
+    <input type="hidden" name="id" value="${dto.id}">
 
     <!-- 작성자 -->
     <div class="mb-3 mt-3">
-      <label for="id" class="form-label">작성자 ID:</label>
-      <input type="text" class="form-control" id="id" name="id" value="${dto.id}"  readonly>
+      <label for="nickname" class="form-label">작성자</label>
+      <input type="text" class="form-control" id="nickname" name="nickname" value="${dto.nickname}" readonly>
     </div>
 
     <!-- 제목 -->
     <div class="mb-3">
       <label for="title" class="form-label">제목:</label>
-      <input type="text" class="form-control" id="title" name="title"
-             placeholder="제목을 입력해주세요" value="${dto.title}">
+      <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${dto.title}">
     </div>
 
     <!-- 내용 -->
     <div class="mb-3">
       <label for="content" class="form-label">내용:</label>
-      <textarea class="form-control" id="content" name="content" rows="6"
-                placeholder="내용을 입력해주세요">${dto.content}</textarea>
+      <textarea class="form-control" id="content" name="content" rows="6" placeholder="내용을 입력해주세요">${dto.content}</textarea>
     </div>
 
     <!-- 카테고리 -->
@@ -40,7 +39,7 @@
                 <option value="4" ${dto.categoryId == 4 ? "selected" : ""}>일식</option>
                 <option value="5" ${dto.categoryId == 5 ? "selected" : ""}>기타</option>
             </select>
-        </div>
+    </div>
 
     <!-- 버튼 -->
     <div class="mb-3 text-end">
@@ -51,3 +50,28 @@
 </div>
 
 <%@include file="../inc/footer.jsp" %>
+
+<script>
+    function validateEditForm() {
+        var title = document.getElementById("title").value;
+        var content = document.getElementById("content").value;
+        var categoryId = document.getElementById("categoryId").value;
+
+        if (title == "") {
+            alert("제목을 입력해주세요.");
+            return false;
+        }
+
+        if (content == "") {
+            alert("내용을 입력해주세요.");
+            return false;
+        }
+
+        if (categoryId == "") {
+            alert("카테고리를 선택해주세요.");
+            return false;
+        }
+
+        return true;  // 모든 검사 통과 시 폼 제출
+    }
+</script>

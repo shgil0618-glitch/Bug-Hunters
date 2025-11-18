@@ -12,18 +12,18 @@
     <welcome-file>default.xhtml</welcome-file>
   </welcome-file-list>
   
-<!--   <servlet>
-  <servlet-name>MbtiController</servlet-name>
-  <servlet-class>com.thejoa703.controller.MbtiController</servlet-class>
+  <servlet>
+  <servlet-name>UserController</servlet-name>
+  <servlet-class>com.thejoa703.controller.UserController</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  <servlet-name>MbtiController</servlet-name>
+  <servlet-name>UserController</servlet-name>
   <url-pattern>*.do</url-pattern>
   </servlet-mapping>
- -->
 
-  <servlet>
+
+ <servlet>
   <servlet-name>ComuController</servlet-name>
   <servlet-class>com.thejoa703.controller.ComuController</servlet-class>
   </servlet>
@@ -31,6 +31,17 @@
   <servlet-mapping>
   <servlet-name>ComuController</servlet-name>
   <url-pattern>*.co</url-pattern>
-  </servlet-mapping>
+ </servlet-mapping> 
+ 
+
+ <servlet>
+  <servlet-name>RecommendController</servlet-name>
+  <servlet-class>com.thejoa703.controller.RecommendController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>RecommendController</servlet-name>
+  <url-pattern>*.recommend</url-pattern>
+ </servlet-mapping> 
 </web-app>
 

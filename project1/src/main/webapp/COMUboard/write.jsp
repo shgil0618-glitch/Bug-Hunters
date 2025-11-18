@@ -1,22 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/header.jsp" %>
+
 <div class="container card my-5 p-4">
     <h3 class="card-header"> COMMUNITY 글쓰기 </h3>
 
     <!-- 컨트롤러로 데이터 전송 -->
-    <form action="/project001_comu/write.co" method="post">
-        <!-- 작성자 -->
-        <div class="mb-3 mt-3">
-            <label for="id" class="form-label">작성자:</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   placeholder="작성자 ID를 입력해주세요" value="">
-        </div>
-
+    <form action="/project001_comu/write.co" method="post" onsubmit="return validateForm()">
+        <input type="hidden" name="email" value="${sessionScope.email}">
+        
         <!-- 제목 -->
         <div class="mb-3">
             <label for="title" class="form-label">제목:</label>
-            <input type="text" class="form-control" id="title" name="title"
-                   placeholder="제목을 입력해주세요" value="">
+            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="">
         </div>
 
         <!-- 카테고리 -->
@@ -35,8 +30,7 @@
         <!-- 내용 -->
         <div class="mb-3">
             <label for="content" class="form-label">내용:</label>
-            <textarea class="form-control" id="content" name="content"
-                      placeholder="내용을 입력해주세요" rows="7"></textarea>
+            <textarea class="form-control" id="content" name="content" placeholder="내용을 입력해주세요" rows="7"></textarea>
         </div>
 
         <!-- 버튼 -->
@@ -50,17 +44,27 @@
 
 <%@ include file="../inc/footer.jsp" %>
 
-<!-- [ communityBoard - write.jsp ] -->
+<script>
+    function validateForm() {
+        var title = document.getElementById("title").value;
+        var categoryId = document.getElementById("categoryId").value;
+        var content = document.getElementById("content").value;
 
+        if (title == "") {
+            alert("제목을 입력해주세요.");
+            return false;
+        }
 
-<%-- <%@include file="../inc/header.jsp" %>
-<h2>글쓰기</h2>
-<form action="write.co" method="post">
-    작성자 ID: <input type="text" name="id"><br>
-    제목: <input type="text" name="title"><br>
-    내용: <textarea name="content" rows="5" cols="50"></textarea><br>
-    카테고리: <input type="text" name="categoryId"><br>
-    <input type="submit" value="등록">
-</form>
-<a href="list.co">목록으로</a>
-<%@include file ="../inc/footer.jsp" %> --%>
+        if (categoryId == "") {
+            alert("카테고리를 선택해주세요.");
+            return false;
+        }
+
+        if (content == "") {
+            alert("내용을 입력해주세요.");
+            return false;
+        }
+
+        return true;  // 모든 검사 통과 시 폼 제출
+    }
+</script>
