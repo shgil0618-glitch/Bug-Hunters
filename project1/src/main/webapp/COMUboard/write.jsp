@@ -5,7 +5,7 @@
     <h3 class="card-header"> COMMUNITY 글쓰기 </h3>
 
     <!-- 컨트롤러로 데이터 전송 -->
-    <form action="/project001_comu/write.co" method="post" onsubmit="return validateForm()">
+    <form action="${pageContext.request.contextPath}/write.co" method="post" onsubmit="return validateForm()">
         <input type="hidden" name="email" value="${sessionScope.email}">
         
         <!-- 제목 -->
@@ -36,7 +36,7 @@
         <!-- 버튼 -->
         <div class="mb-3 text-end">
             <button type="submit" class="btn btn-primary">글쓰기</button>
-            <a href="/project001_comu/list.co" class="btn btn-primary">목록보기</a>
+            <a href="${pageContext.request.contextPath}/list.co" class="btn btn-primary">목록보기</a>
             <a href="javascript:history.go(-1)" class="btn btn-danger">BACK</a>
         </div>
     </form>
