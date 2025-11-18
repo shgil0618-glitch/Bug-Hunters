@@ -14,6 +14,7 @@ public class ComuEditView implements ComuService {
 	@Override
 	public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 데이터 넘겨받기
+		request.setCharacterEncoding("UTF-8");
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		// 2. 드커프리
 		ComuDao dao = new ComuDao();

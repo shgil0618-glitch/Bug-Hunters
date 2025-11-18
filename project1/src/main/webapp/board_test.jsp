@@ -1,3 +1,4 @@
+
 <%@page import="com.thejoa703.dto.ComuDto"%>
 <%@page import="com.thejoa703.dao.ComuDao"%>
 
@@ -21,16 +22,14 @@
 	  </pre>
 
  	  <%-- <%
-      ComuDao dao = new ComuDao();
-	  ComuDto dto = new ComuDto();
-	  
-	  dto.setTitle("첫번째 글쓰기입니다.");
-	  dto.setContent("내용");
-	  dto.setCategoryId(1);
-	  dto.setId(1);
-	  out.println(dao.insert(dto));
-
-	  %> --%>
+ 	 SerchDao dao = new SerchDao();
+ 	 SerchDto dto = new SerchDto();
+ 	  dto.setId(1);
+	  dto.setFoodId(1);
+	  dto.setType("1");
+	  dto.setFeedback("111");
+	  out.println(dao.insert(dto)); 
+	  %>  --%>
 	  
 	 
 	  <pre class="alert alert-success">

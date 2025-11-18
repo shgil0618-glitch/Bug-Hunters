@@ -33,7 +33,8 @@ public class ComuInsert implements ComuService {
 			 */
 		
 			/* int id = (Integer)session.getAttribute("id"); */ 
-			int id = Integer.parseInt(request.getParameter("id"));
+			/* int id = Integer.parseInt(request.getParameter("email")); */
+			String email = (String) session.getAttribute("email");
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -41,11 +42,17 @@ public class ComuInsert implements ComuService {
 		// 2. 디커프리(PostDao) db처리
 		ComuDao dao = new ComuDao();
 		ComuDto dto = new ComuDto();
-		dto.setId(id);
+		
+		/* dto.setId(id); */
+		dto.setEmail(email);
+		/* dto.setEmail(request.getParameter("email")); */
 		dto.setTitle(title); dto.setContent(content); dto.setCategoryId(categoryId);
 		String result = String.valueOf(dao.insert(dto));	//##
+		System.out.println("INSERT EMAIL = " + dto.getEmail());
+		System.out.println(result);
 		// 3. 데이터 넘겨주기
 		request.setAttribute("result", result);
+		
 		
 
 	}
