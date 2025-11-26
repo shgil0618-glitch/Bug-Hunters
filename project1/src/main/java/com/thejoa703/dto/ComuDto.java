@@ -3,23 +3,19 @@ package com.thejoa703.dto;
 import java.time.LocalDateTime;
 
 public class ComuDto {
-	 private int postId;
-	    private int id;  // FK: USERS.APPUSERID
-	    private String title;
-	    private String content;
-	    private int categoryId;
-	    private int views;
-	    private LocalDateTime createdAt;
-	    private LocalDateTime updatedAt;
-	    private String nickname;   // 새로 추가
-	    private String email;
-	    private String categoryName;
-
-	    public ComuDto() {}
-
-
-
-
+	private int postId;
+	private int id;
+	private String title;
+	private String content;
+	private int categoryId;
+	private int   views;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;  
+	
+	public ComuDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public ComuDto(int postId, int id, String title, String content, int categoryId, int views, LocalDateTime createdAt,
 			LocalDateTime updatedAt) {
 		super();
@@ -33,107 +29,23 @@ public class ComuDto {
 		this.updatedAt = updatedAt;
 	}
 	
-	
-	
-	
-
-	
-
-	public String getCategoryName() {
-		return categoryName;
+	public ComuDto(int postId, int id, String title, String content, int categoryId, int views,
+			LocalDateTime createdAt) {
+		super();
+		this.postId = postId;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.categoryId = categoryId;
+		this.views = views;
+		this.createdAt = createdAt;
 	}
-
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-
 	@Override
 	public String toString() {
 		return "ComuDto [postId=" + postId + ", id=" + id + ", title=" + title + ", content=" + content
 				+ ", categoryId=" + categoryId + ", views=" + views + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + ", nickname=" + nickname + ", email=" + email + ", categoryName=" + categoryName + "]";
+				+ updatedAt + "]";
 	}
-
-
-
-
-
-	public ComuDto(int postId, int id, String title, String content, int categoryId, int views, LocalDateTime createdAt,
-			LocalDateTime updatedAt, String nickname, String email, String categoryName) {
-		super();
-		this.postId = postId;
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.categoryId = categoryId;
-		this.views = views;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.nickname = nickname;
-		this.email = email;
-		this.categoryName = categoryName;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-	public ComuDto(int postId, int id, String title, String content, int categoryId, int views, LocalDateTime createdAt,
-			LocalDateTime updatedAt, String nickname, String email) {
-		super();
-		this.postId = postId;
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.categoryId = categoryId;
-		this.views = views;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.nickname = nickname;
-		this.email = email;
-	}
-
-
-	public ComuDto(int postId, int id, String title, String content, int categoryId, int views, LocalDateTime createdAt,
-			LocalDateTime updatedAt, String nickname) {
-		super();
-		this.postId = postId;
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.categoryId = categoryId;
-		this.views = views;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.nickname = nickname;
-	}
-
-
-	public String getNickname() {
-		return nickname;
-	}
-
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-
-	
-
-
-
-
-
 	public int getPostId() {
 		return postId;
 	}

@@ -14,7 +14,6 @@ import com.thejoa703.service.ComuEdit;
 import com.thejoa703.service.ComuEditView;
 import com.thejoa703.service.ComuInsert;
 import com.thejoa703.service.ComuList;
-import com.thejoa703.service.ComuSearch;
 import com.thejoa703.service.ComuService;
 
 
@@ -115,13 +114,6 @@ public class ComuController extends HttpServlet{
 					 out.println("<script>alert('아이디를 확인해주세요.'); history.go(-1) </script>");
 				 }
 		}
-		else if(path.equals("/search.co")) {
-		    System.out.println("[Controller] /search.co 요청");
-		    service = new ComuSearch(); 
-		    service.exec(request, response);
-		    request.getRequestDispatcher("COMUboard/list.jsp").forward(request, response);
-		}
-
 		
 		}
 }

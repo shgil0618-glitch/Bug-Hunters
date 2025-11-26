@@ -37,9 +37,8 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" 
              data-bs-toggle="dropdown">메뉴 추천</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommendType/list.jsp">오늘의 추천</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommendType/list.jsp">재료 기반 추천</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommendType/list.jsp">미니게임형 추천</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ingredientList.ingre">오늘의 추천</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ingredientList.ingre">재료 기반 추천</a></li>
           </ul>
         </li>
 
@@ -48,8 +47,8 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" 
              data-bs-toggle="dropdown">음식 검색</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommendAll.recommend">키워드/카테고리 검색</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommendAll.recommend">음식 상세보기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recipeList.reci">키워드/카테고리 검색</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recipeList.reci">음식 상세보기</a></li>
           </ul>
         </li>
 
@@ -58,7 +57,7 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" 
              data-bs-toggle="dropdown">커뮤니티</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/list.co?email=${sessionScope.email}">레시피 공유</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/list.co">레시피 공유</a></li>
             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/list.co">리뷰 게시판</a></li>
           </ul>
         </li>
