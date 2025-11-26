@@ -9,9 +9,9 @@
 	  <form action="<%=request.getContextPath()%>/delete.co"  method="post"> 
       	<input type="hidden" name="postId" value="${dto.postId}">
 		  <div class="my-3">
-		    <label for="pass" class="form-label">ID:</label>
+		    <label for="postId" class="form-label">ID:</label>
 		    <input type="password" class="form-control" 
-		    	id="pass"  placeholder="아이디를 입력해주세요" name="pass" >
+		    	id="postId"  placeholder="아이디를 입력해주세요" name="postId" >
 		  </div> 
 		  <div class="my-3  text-end">
 		  	<button type="submit" class="btn btn-primary">글삭제</button>

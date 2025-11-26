@@ -35,8 +35,8 @@ public class ComuDao {
 	
 	 public int insert(ComuDto dto){
      	int result = -1;
-     	String sql = "INSERT INTO COMMUNITY_TB (postId, id, title, content, categoryId) "
-                + " VALUES(COMMUNITY_TB_seq.nextval, (SELECT APPUSERID FROM USERS WHERE EMAIL = ?), ?, ?, ?)";
+     	String sql = "insert into COMMUNITY_TB (postId, id, title, content, categoryId)"
+     			+ " values(COMMUNITY_TB_seq.nextval,?,?,?,?)";
      	//String sql = "select * from dept where deptno=?";
      	
      	Connection conn = null; PreparedStatement pstmt = null; ResultSet rset=null;
@@ -52,7 +52,7 @@ public class ComuDao {
  			conn = DriverManager.getConnection(url,user,pass);
 	        	//3. pstmt
  			pstmt = conn.prepareStatement(sql);
- 		    pstmt.setString(1, dto.getEmail());  
+ 			pstmt.setInt(1, dto.getId());
  			pstmt.setString(2, dto.getTitle());
  			pstmt.setString(3, dto.getContent());
  			pstmt.setInt(4, dto.getCategoryId());
@@ -77,18 +77,8 @@ public class ComuDao {
 // 2. [전체보기]전체게시글 가져오기
 	 public  ArrayList<ComuDto> selectAll(){
          ArrayList<ComuDto> result = new ArrayList<>();
-			/*
-			 * String sql = "SELECT c.postId, c.id, c.title, c.content, c.categoryId, " +
-			 * "c.views, c.createdAt, c.updatedAt, u.NICKNAME " + "FROM COMMUNITY_TB c " +
-			 * "JOIN USERS u ON c.id = u.APPUSERID " +
-			 * "ORDER BY NVL(c.updatedAt, c.createdAt) DESC";
-			 */
-         String sql = "SELECT c.postId, c.id, c.title, c.content, c.categoryId, " +
-                 "c.views, c.createdAt, c.updatedAt, u.NICKNAME, cat.categoryName " +
-                 "FROM COMMUNITY_TB c " +
-                 "JOIN USERS u ON c.id = u.APPUSERID " +
-                 "LEFT JOIN CATEGORY_TB cat ON c.categoryId = cat.categoryId " +
-                 "ORDER BY NVL(c.updatedAt, c.createdAt) DESC";
+         String sql = " SELECT      *      FROM      COMMUNITY_TB  ORDER BY postId DESC";
+         // String sql = "select p.*,u.NICKNAME from COMMUNITY_TB p, USERS u where p.postId=u.APPUSERID ORDER BY postId DESC";
          // 드 커 프 리
          Connection conn = null; PreparedStatement pstmt = null;  ResultSet rset = null;
          String driver="oracle.jdbc.driver.OracleDriver";
@@ -105,7 +95,12 @@ public class ComuDao {
             //4. RESULT (  select : executeQuery  / insert,update, delete: executeUpdate)
             rset = pstmt.executeQuery();  //표
             while(rset.next()) { //줄
-            	
+            	/*
+            	 * postId NUMBER(8) PRIMARY KEY, -- 게시글 ID id VARCHAR2(30) NOT NULL, -- 작성자
+            	 * title VARCHAR2(200) NOT NULL, -- 제목 content CLOB NOT NULL, -- 본문 categoryId
+            	 * NUMBER(3) NOT NULL, -- 카테고리 번호 views NUMBER(6) DEFAULT 0, -- 조회수 createdAt
+            	 * DATE DEFAULT SYSDATE, -- 작성일 updatedAt DATE, -- 수정일
+            	 */
             	result.add(new ComuDto(
             		    rset.getInt("postId"),                   
             		    rset.getInt("id"),                       
@@ -114,10 +109,7 @@ public class ComuDao {
             		    rset.getInt("categoryId"),               
             		    rset.getInt("views"),					 
             		    rset.getTimestamp("createdAt").toLocalDateTime(), 
-            		    rset.getTimestamp("updatedAt") != null ? rset.getTimestamp("updatedAt").toLocalDateTime() : null,
-            		    rset.getString("nickname"),
-            		    null,							//dto에 email 있지만 사용안해서 일단 null값 넣음
-            		    rset.getString("categoryName")   // 여기 추가
+            		    rset.getTimestamp("updatedAt") != null ? rset.getTimestamp("updatedAt").toLocalDateTime() : null
             		));
             } 
          } catch (Exception e) { e.printStackTrace();
@@ -136,16 +128,7 @@ public class ComuDao {
 
 	 public ComuDto select(int postId){
 		 ComuDto result = new ComuDto();
-			/* String sql = "select * from COMMUNITY_TB where postId=?"; */
-		 String sql = "SELECT c.postId, c.id, c.title, c.content, c.categoryId, " +
-	             "c.views, c.createdAt, c.updatedAt, u.NICKNAME, cat.categoryName " +
-	             "FROM COMMUNITY_TB c " +
-                 "JOIN USERS u ON c.id = u.APPUSERID " +
-                 "LEFT JOIN CATEGORY_TB cat ON c.categoryId = cat.categoryId " +
-	             "WHERE c.postId = ?";
-		 
-		 
-
+		 String sql = "select * from COMMUNITY_TB where postId=?";
 		        	// 드 커 프 리
 		 Connection conn = null; PreparedStatement pstmt = null; ResultSet rset=null;
 		 String driver ="oracle.jdbc.driver.OracleDriver";
@@ -172,10 +155,7 @@ public class ComuDao {
             		    rset.getInt("categoryId"),               
             		    rset.getInt("views"),					 
             		    rset.getTimestamp("createdAt").toLocalDateTime(), 
-            		    rset.getTimestamp("updatedAt") != null ? rset.getTimestamp("updatedAt").toLocalDateTime() : null,	
-            		    rset.getString("nickname"),
-            		    null,
-            		    rset.getString("categoryName")
+            		    rset.getTimestamp("updatedAt") != null ? rset.getTimestamp("updatedAt").toLocalDateTime() : null	
 		 				);
 		 	}
 		 	
@@ -227,16 +207,7 @@ public class ComuDao {
 //4. 글수정하기 sql
 		 public int update(ComuDto dto){			//매개변수 많은면 dto 받아!
 			 int result = -1;
-				/*
-				 * String sql =
-				 * "update COMMUNITY_TB set title=?, content=?, categoryId=? where postId=? and id=?"
-				 * ;
-				 */
-			 
-			 String sql = "UPDATE COMMUNITY_TB "
-			           + "SET title = ?, content = ?, categoryId = ?, updatedAt = SYSDATE "
-			           + "WHERE postId = ? AND id = ?";
-			 
+			 String sql = "update COMMUNITY_TB set title=?, content=?, categoryId=? where postId=? and id=?";
 			 // 드 커 프 리
 			 Connection conn = null; PreparedStatement pstmt = null; ResultSet rset=null;
 			 String driver ="oracle.jdbc.driver.OracleDriver";
@@ -302,79 +273,7 @@ public class ComuDao {
 			 }
 			 return result;
 			  }
-		 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//6. (제목,내용,닉네임)검색 기능
-		 public ArrayList<ComuDto> search(String target, String keyword) {
-
-		     ArrayList<ComuDto> result = new ArrayList<>();
-
-		     // 검색 컬럼 매핑
-		     String column = "";
-		     switch (target) {
-		         case "title":
-		             column = "c.title";
-		             break;
-		         case "content":
-		             column = "c.content";
-		             break;
-		         case "nick_name":   // 외래키 → USERS.nickname
-		             column = "u.nickname";
-		             break;
-		         default:
-		             column = "c.title";
-		     }
-
-		     String sql = "SELECT c.postId, c.id, c.title, c.content, c.categoryId, "
-		                + "c.views, c.createdAt, c.updatedAt, u.NICKNAME, cat.categoryName "
-		                + "FROM COMMUNITY_TB c "
-		                + "JOIN USERS u ON c.id = u.APPUSERID "
-		                + "LEFT JOIN CATEGORY_TB cat ON c.categoryId = cat.categoryId "
-		                + "WHERE " + column + " LIKE ? "
-		                + "ORDER BY NVL(c.updatedAt, c.createdAt) DESC";
-
-		     Connection conn = null; 
-		     PreparedStatement pstmt = null; 
-		     ResultSet rs = null;
-
-		     String driver ="oracle.jdbc.driver.OracleDriver";
-		     String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		     String user = "scott", pass ="tiger";
-
-		     try {
-		         Class.forName(driver);
-		         conn = DriverManager.getConnection(url, user, pass);
-		         pstmt = conn.prepareStatement(sql);
-		         pstmt.setString(1, "%" + keyword + "%");
-		         rs = pstmt.executeQuery();
-
-		         while (rs.next()) {
-		             result.add(new ComuDto(
-		                 rs.getInt("postId"),
-		                 rs.getInt("id"),
-		                 rs.getString("title"),
-		                 rs.getString("content"),
-		                 rs.getInt("categoryId"),
-		                 rs.getInt("views"),
-		                 rs.getTimestamp("createdAt").toLocalDateTime(),
-		                 rs.getTimestamp("updatedAt") != null ? rs.getTimestamp("updatedAt").toLocalDateTime() : null,
-		                 rs.getString("nickname"),
-		                 null,
-		                 rs.getString("categoryName")
-		             ));
-		         }
-
-		     } catch (Exception e) {
-		         e.printStackTrace();
-		     } finally {
-		         try { if (rs != null) rs.close(); } catch (Exception e) {}
-		         try { if (pstmt != null) pstmt.close(); } catch (Exception e) {}
-		         try { if (conn != null) conn.close(); } catch (Exception e) {}
-		     }
-
-		     return result;
-		 }
-
+ 
 
 }
 

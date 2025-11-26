@@ -16,11 +16,11 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>${dto.nickname}</td>
+                    <td>${dto.id}</td>
                 </tr>
                 <tr>
                     <th>카테고리</th>
-                    <td>${dto.categoryName}</td>
+                    <td>${dto.categoryId}</td>
                 </tr>
                 <tr>
                     <th>조회수</th>

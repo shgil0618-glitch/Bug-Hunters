@@ -15,7 +15,6 @@ public class ComuDtail implements ComuService {
 	@Override
 	public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 데이터 넘겨받기
-		request.setCharacterEncoding("UTF-8");
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		System.out.println("....." + postId);
 		

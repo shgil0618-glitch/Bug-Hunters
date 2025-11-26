@@ -21,6 +21,26 @@
   <servlet-name>UserController</servlet-name>
   <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>IngredientController</servlet-name>
+  <servlet-class>com.thejoa703.controller.IngredientController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>IngredientController</servlet-name>
+  <url-pattern>*.ingre</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>RecipeController</servlet-name>
+  <servlet-class>com.thejoa703.controller.RecipeController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>RecipeController</servlet-name>
+  <url-pattern>*.reci</url-pattern>
+  </servlet-mapping>
 
 
  <servlet>
