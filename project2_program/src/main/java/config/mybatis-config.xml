@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration> 
+	<typeAliases>
+		<typeAlias type="project2.dto.UserDto"  		alias="UserDto"  />
+		<typeAlias type="project2.dto.AuthDto"  		alias="AuthDto"  />
+		<typeAlias type="project2.dto.AppUserAuthDto"   alias="AppUserAuthDto"  />
+		<typeAlias type="project2.dto.AppUser"   alias="AppUser"  />
+	</typeAliases>
+</configuration>
