@@ -4,7 +4,7 @@
     <h3 class="card-header"> COMMUNITY 글쓰기 </h3>
 
     <!-- 컨트롤러로 데이터 전송 -->
-    <form action="/project001_comu/write.co" method="post">
+    <form action="<%=request.getContextPath()%>/write.co" method="post">
         <!-- 작성자 -->
         <div class="mb-3 mt-3">
             <label for="id" class="form-label">작성자:</label>

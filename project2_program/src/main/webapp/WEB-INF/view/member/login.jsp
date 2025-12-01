@@ -2,12 +2,25 @@
     pageEncoding="UTF-8"%>
 
 <%@  include file="../inc/header.jsp" %>   
+
+<c:if test="${not empty loginError }">
+	<script>
+		alert("${loginError}");
+	</script>
+</c:if>
+
+<c:if test="${empty deleteError }">
+	<script>
+		alert("${success}");
+	</script>
+</c:if>
+
 <div class="container mt-5">
 	<h3> 로그인</h3>
-	<form action="login_process.jsp"  method="post">
+	<form action="${pageContext.request.contextPath}/login"  method="post">
 	  <div class="mb-3 mt-3">
-	    <label for="email" class="form-label">Email:</label>
-	    <input type="email" class="form-control" id="email" placeholder="이메일을 적어주세요"  required name="email">
+	    <label for="username" class="form-label">Email:</label>
+	    <input type="email" class="form-control" id="username" placeholder="이메일을 적어주세요"  required name="username">
 	  </div>
 	  <div class="mb-3">
 	    <label for="password" class="form-label">Password:</label>
@@ -19,6 +32,7 @@
 	    </label>
 	  </div> -->
 	  <button type="submit" class="btn btn-primary">로그인</button>
+	  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
 </div>
 <%@  include file="../inc/footer.jsp" %>    

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,9 +37,8 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" 
              data-bs-toggle="dropdown">메뉴 추천</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommend/today.jsp">오늘의 추천</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommend/ingredient.jsp">재료 기반 추천</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recommend/game.jsp">미니게임형 추천</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ingredientList.ingre">오늘의 추천</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/ingredientList.ingre">재료 기반 추천</a></li>
           </ul>
         </li>
 
@@ -49,8 +47,8 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" 
              data-bs-toggle="dropdown">음식 검색</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/search/search.jsp">키워드/카테고리 검색</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/search/detail.jsp">음식 상세보기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recipeList.reci">키워드/카테고리 검색</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/recipeList.reci">음식 상세보기</a></li>
           </ul>
         </li>
 
@@ -79,27 +77,30 @@
       <ul class="navbar-nav">
         <% 
             String email = (String)session.getAttribute("email");  
-            Integer sid = (Integer)session.getAttribute("APP_USER_ID"); 
+            Integer sid = (Integer)session.getAttribute("APPUSERID"); 
             if(email != null){ %>
             <li class="nav-item dropdown">
-          		<a class="nav-link dropdown-toggle" href="#" role="button" 
-            		 data-bs-toggle="dropdown"><%=email%></a>
-         		 <ul class="dropdown-menu">
-            		<li><a class="dropdown-item" href="<%=request.getContextPath()%>/member/mypage.jsp?APP_USER_ID=<%=sid%>">마이페이지</a></li>
-            		<li><a class="dropdown-item" href="<%=request.getContextPath()%>/member/mypage.jsp?APP_USER_ID=<%=sid%>">프로필 설정</a></li>
-            		<li><a class="dropdown-item" href="<%=request.getContextPath()%>/member/mypage.jsp?APP_USER_ID=<%=sid%>">알림 설정</a></li>
-            		<li><a class="dropdown-item" href="<%=request.getContextPath()%>/member/mypage.jsp?APP_USER_ID=<%=sid%>">계정 관리</a></li>
-          		</ul>
-       		 </li>
+                <a class="nav-link dropdown-toggle" href="#" role="button" 
+                   data-bs-toggle="dropdown"><%=email%></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="<%=request.getContextPath()%>/mypage.do">마이페이지</a></li>
+                  <li><a class="dropdown-item" href="<%=request.getContextPath()%>/잡기능.do">마이페이지</a></li>
+                  <li><a class="dropdown-item" href="<%=request.getContextPath()%>/잡기능.do">마이페이지</a></li>
+                  <li><a class="dropdown-item" href="<%=request.getContextPath()%>/잡기능.do">마이페이지</a></li>
+                  <li><a class="dropdown-item" href="<%=request.getContextPath()%>/잡기능.do">마이페이지</a></li>        
+                </ul>
+              </li>
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do">로그아웃</a>
               </li>
         <% } else { %>
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/member/login.jsp">LOGIN</a>
+                
+                <a class="nav-link" href="<%=request.getContextPath()%>/loginForm.do">LOGIN</a>
+                <%-- <a class="nav-link" href="<%=request.getContextPath()%>/view/UserLogin.jsp">LOGIN</a> --%>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/member/join.jsp">JOIN</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/view/UserJoin.jsp">회원가입</a>
               </li>
         <% } %>
       </ul>
