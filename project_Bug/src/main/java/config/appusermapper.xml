@@ -24,7 +24,7 @@
        <result property="password"      column="PASSWORD"/>
        <collection property="authList"  resultMap="authMap"/>
      </resultMap>
-     
+    
     <insert id="insert"  parameterType="project2.dto.AppUserDto">
         insert into bug (APPUSERID , EMAIL, PASSWORD, NICKNAME, MOBILE, BFILE)  
         values (users_seq.nextval, #{email} , #{password}, #{nickname}, #{mobile}, #{bfile})
