@@ -1,0 +1,102 @@
+## 개발자 커뮤니티 플랫폼
+ - 개발자들끼리 코드 공유
+ - 유료코드판매 수수료와 광고 등으로 수익 창출 가능
+---
+ 
+ ## 냉장고 속 재료 기반 요리 추천 앱
+  - 냉장고 속 재료를 입력하면 자동으로 메뉴 추천 및 레시피 소개
+  - 부족한재료 구매링크를 통한 수수료나 직접판매로 수익 창출 가능
+
+
+- 사용자가 냉장고 속 재료를 입력하면, 해당 재료로 만들 수 있는 요리 추천
+
+- MBTI, 식습관, 선호도 기반으로 맞춤형 레시피 제공
+
+- 영양소 필터링: 고단백, 저탄수, 저염 등
+
+- 재료 소진 관리: 유통기한 임박 재료 우선 추천
+
+- 레시피 공유 및 평가 기능
+
+📌 1. question 테이블 (사용자 취향 질문)
+|컬럼명|타입|설명|
+| --- | -- | -------------------------------------------------------- |
+|question_id INT	|질문| 고유 ID (PK)|
+|content	TEXT	|질문 |내용 (예: "맵찔이세요?")|
+|category	VARCHAR	|질문 |분류 (취향, 알레르기 등)|
+
+
+📌 2. choice 테이블 (질문에 대한 선택지)
+|컬럼명	|타입|	설명|
+| --- | -- | -------------------------------------------------------- |
+|choice_id	|INT	|선택지 고유 ID (PK)|
+|question_id	|INT|	연결된 질문 |ID (FK)|
+|content	|VARCHAR	|선택지 내용 (예: "맵찔이", "매운 거 좋아함")|
+|score	|INT	|선택지 점수 또는 가중치|
+
+
+📌 3. foodtype 테이블 (음식 분류)
+|컬럼명	|타입|	설명|
+| --- | -- | -------------------------------------------------------- |
+|foodtype_id|	INT|	음식 분류 ID (PK)
+|name	|VARCHAR	|음식 종류 (한식, 중식 등)
+|spicy_level|	INT	|매운 정도 (0~5)
+|is_vegan	|BOOLEAN|	비건 여부
+
+
+📌 4. energytype 테이블 (영양소 분류)
+|컬럼명|	타입|	설명|
+| --- | -- | -------------------------------------------------------- |
+energytype_id	|INT|	영양소 ID (PK)
+name	|VARCHAR	|영양소 이름 (단백질, 탄수화물 등)
+unit	|VARCHAR	|단위 (g, mg, kcal 등)
+daily_value|	INT|	1일 권장 섭취량
+
+
+📌 5. 추가로 추천하는 테이블
+🥬 ingredient (재료 정보)
+|컬럼명	|타입|	  설명|
+| --- | -- | -------------------------------------------------------- |
+|ingredient_id|	INT|	재료 ID (PK)|
+|name	    |    VARCHAR|	재료명|
+|energytype_id|	INT|	관련 영양소 ID (FK)|
+|calories	|INT|	100g당 칼로리|
+
+🍳 recipe (레시피 정보)
+|컬럼명	|타입|	설명|
+| --- | -- | -------------------------------------------------------- |
+|recipe_id|	INT|	레시피 ID (PK)|
+|name	|VARCHAR	|요리 이름|
+|description	|TEXT|	요리 설명|
+|foodtype_id	|INT	|음식 분류 ID (FK)|
+|image_url	|TEXT|	요리 이미지|
+
+🧾 recipe_ingredient (레시피-재료 매핑)
+|컬럼명	|타입|	설명|
+| --- | -- | -------------------------------------------------------- |
+|recipe_id|	INT	|레시피 ID (FK)|
+|ingredient_id	|INT|	재료 ID (FK)|
+|quantity	|VARCHAR	|사용량 (예: "1컵", "100g")|
+
+👤 user_profile (사용자 정보)
+|컬럼명	|타입	|설명|
+| --- | -- | -------------------------------------------------------- |
+|user_id	|INT	|사용자 ID (PK)|
+|mbti	|VARCHAR	|MBTI 유형|
+|allergies	|TEXT|	알레르기 정보|
+|preferences|	TEXT|	선호 음식 키워드|
+
+
+------------------------------------
+# 숙제 테이블 만들기
+
+CREATE TABLE users (
+    id          VARCHAR2(30)     PRIMARY KEY,                 -- 사용자 고유 ID
+    password    VARCHAR2(100)    NOT NULL,                    -- 비밀번호 (암호화 저장)
+    nickname    VARCHAR2(50)     NOT NULL,                    -- 닉네임
+    email       VARCHAR2(100)    UNIQUE,                      -- 이메일 (로그인용)
+    preference  VARCHAR2(100),                                -- 선호 음식 or 식단 유형
+    allergy     CHAR(1),                                      -- 알러지 (추후 별도 테이블과 연동 예정)
+    join_date   DATE            DEFAULT SYSDATE               -- 가입일
+);
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project2.dao.UserDao">
+
+  <resultMap id="userMap" type="project2.dto.UserDto">
+    <result property="appUserId" column="APP_USER_ID" />
+    <result property="email" column="EMAIL" />
+    <result property="password" column="PASSWORD" />
+    <result property="mbtiTypeId" column="MBTI_TYPE_ID" />
+    <result property="createdAt" column="CREATED_AT"/>
+    <result property="ufile" column="UFILE"/>
+  </resultMap>
+
+  <!-- 회원 등록 -->
+  <insert id="insert" parameterType="project2.dto.UserDto">
+    INSERT INTO appuser (
+        APP_USER_ID, EMAIL, PASSWORD, MBTI_TYPE_ID,CREATED_AT
+    ) VALUES (
+        appuser_seq.nextval, #{email}, #{password}, #{mbtiTypeId},SYSTIMESTAMP
+    )
+  </insert>
+
+  <!-- 전체 조회 -->
+  <select id="selectAll" resultMap="userMap">
+    SELECT * FROM appuser ORDER BY app_user_id DESC
+  </select>
+
+  <!-- 마이페이지 단일 조회 -->
+  <select id="select" resultMap="userMap" parameterType="int">
+    SELECT * FROM appuser WHERE app_user_id = #{appUserId}
+  </select>
+  
+
+
+  <!-- 로그인 -->
+  <select id="login" parameterType="project2.dto.UserDto" resultMap="userMap">
+    SELECT * FROM appuser
+    WHERE email = #{email} AND password = #{password}
+  </select>
+
+  <!-- 수정 -->
+  <update id="update" parameterType="project2.dto.UserDto">
+    UPDATE appuser 
+    SET email=#{email}, password=#{password}, mbti_type_id=#{mbtiTypeId}
+    WHERE app_user_id=#{appUserId}
+  </update>
+
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="project2.dto.UserDto">
+    DELETE FROM appuser WHERE app_user_id=#{appUserId} AND password=#{password}
+  </delete>
+  
+  
+  
+	<insert id="insert2" parameterType="project2.dto.UserDto">
+    INSERT INTO appuser (
+        APP_USER_ID, EMAIL, PASSWORD, MBTI_TYPE_ID,CREATED_AT,UFILE
+    ) VALUES (
+        appuser_seq.nextval, #{email}, #{password}, #{mbtiTypeId},SYSTIMESTAMP,#{ufile}
+    )
+    </insert>
+    
+    <!-- 수정 -->
+  <update id="update2" parameterType="project2.dto.UserDto">
+    UPDATE appuser 
+    SET email=#{email}, password=#{password}, mbti_type_id=#{mbtiTypeId},UFILE=#{ufile}
+    WHERE app_user_id=#{appUserId}
+  </update>
+  
+  <!-- 아이디 중복 검사 -->
+  <select resultType="int" id="iddouble" parameterType="String">
+  	select count(*) cnt from appuser where email=#{email}
+  </select>
+  
+  <!-- 관리자가 해당유저 삭제 -->
+  <delete id="deleteAdmin" parameterType="project2.dto.UserDto">
+    DELETE FROM appuser WHERE app_user_id=#{appUserId} 
+  </delete>
+  
+  <select resultMap="userMap" id="selectEmail" parameterType="project2.dto.UserDto"> select * from appuser where email=#{email} </select>
+  
+  <!-- 관리자 업데이트 -->
+  <update id="updateAdmin" parameterType="project2.dto.UserDto">
+    UPDATE appuser 
+    SET mbti_type_id=#{mbtiTypeId}
+    WHERE app_user_id=#{appUserId}
+  </update>
+  
+     <!-- SECURITY -->
+   <!-- SECURITY -->
+   <insert  id="insertAuth"    parameterType="AuthDto">
+      insert into  authorities  (email, auth)  values (#{email} , #{auth})
+   </insert>   
+      
+   <resultMap id="authMap" type="AuthDto">
+      <result property="email" column="email" />
+      <result property="auth" column="auth" />
+   </resultMap>
+   <resultMap id="appUserAuthMap" type="AppUserAuthDto">
+      <result property="email" column="email" />
+      <result property="password" column="password" />
+      <collection property="authList" resultMap="authMap" />
+   </resultMap>
+   <select resultMap="appUserAuthMap" id="readAuth"
+      parameterType="AppUserAuthDto"> select u.email, u.password, a.auth from appuser u left
+      outer join authorities a on u.email = a.email where u.email = #{email}
+   </select> 
+  
+</mapper>
