@@ -26,7 +26,11 @@ public class UserLogin implements UserService {
         
         if (dto != null) {
             request.setAttribute("result", 1);
+<<<<<<< HEAD
             request.setAttribute("email", dto.getEmail());
+=======
+            request.setAttribute("email", dto.getEMAIL());
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
             HttpSession  session = request.getSession();           
             session.setAttribute("email", email);  
         } else {

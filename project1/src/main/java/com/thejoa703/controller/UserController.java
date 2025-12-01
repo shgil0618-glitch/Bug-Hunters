@@ -62,7 +62,15 @@ public class UserController extends HttpServlet {
 			Integer result = (Integer) request.getAttribute("result");
 			String email = (String) session.getAttribute("email");
 			System.out.println("로그인된 사용자 이메일: " + email);
+<<<<<<< HEAD
 			if (result != null && result > 0) {
+=======
+			
+			if (result != null && result > 0) {
+				UserDao dao = new UserDao();
+		        UserDto user = dao.mypage(email);
+		        session.setAttribute("nickname", user.getNICKNAME());
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 				out.println("<script>alert('로그인 성공!'); location.href='mypage.do';</script>");
 			} else {
 				out.println("<script>alert('로그인 실패! 이메일 또는 비밀번호를 확인하세요.'); history.go(-1);</script>");

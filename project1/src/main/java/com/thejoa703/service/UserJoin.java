@@ -20,10 +20,17 @@ public class UserJoin implements UserService {
         String mobile = request.getParameter("mobile");
 
         UserDto dto = new UserDto();
+<<<<<<< HEAD
         dto.setPassword(password);
         dto.setNickname(nickname);
         dto.setEmail(email);
         dto.setMobile(mobile);
+=======
+        dto.setPASSWORD(password);
+        dto.setNICKNAME(nickname);
+        dto.setEMAIL(email);
+        dto.setMOBILE(mobile);
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
         System.out.println("비밀번호: " + password);
         System.out.println("닉네임: " + nickname);
         System.out.println("이메일: " + email);

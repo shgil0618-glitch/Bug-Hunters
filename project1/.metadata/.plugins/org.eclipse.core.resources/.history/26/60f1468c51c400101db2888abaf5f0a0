@@ -1,0 +1,50 @@
+package com.thejoa703.service;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.thejoa703.dao.UserDao;
+import com.thejoa703.dto.UserDto;
+
+public class UserJoin implements UserService {
+    @Override
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        String password = request.getParameter("password");
+        String nickname = request.getParameter("nickname");
+        String email = request.getParameter("email");
+        String mobile = request.getParameter("mobile");
+
+        UserDto dto = new UserDto();
+        dto.setPASSWORD(password);
+        dto.setNICKNAME(nickname);
+        dto.setEMAIL(email);
+        dto.setMOBILE(mobile);
+
+        System.out.println("비밀번호: " + password);
+        System.out.println("닉네임: " + nickname);
+        System.out.println("이메일: " + email);
+        System.out.println("휴대폰: " + mobile);
+
+        UserDao dao = new UserDao();
+
+        // ✅ 중복검사 먼저 실행
+        int result = 0;
+        if (dao.checkEmail(email)) {
+            // 이미 존재하는 이메일이면 -1 반환
+            result = -1;
+            System.out.println("중복된 이메일: " + email);
+        } else {
+            // 중복이 아니면 회원가입 진행
+            result = dao.insert(dto);
+            System.out.println("회원가입 결과: " + result);
+        }
+
+        // 결과를 request에 담아서 JSP에서 메시지 출력 가능
+        request.setAttribute("result", result);
+    }
+}

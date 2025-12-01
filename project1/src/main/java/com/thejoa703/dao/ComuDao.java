@@ -78,6 +78,7 @@ public class ComuDao {
 	 public  ArrayList<ComuDto> selectAll(){
          ArrayList<ComuDto> result = new ArrayList<>();
          String sql = " SELECT      *      FROM      COMMUNITY_TB  ORDER BY postId DESC";
+         // String sql = "select p.*,u.NICKNAME from COMMUNITY_TB p, USERS u where p.postId=u.APPUSERID ORDER BY postId DESC";
          // 드 커 프 리
          Connection conn = null; PreparedStatement pstmt = null;  ResultSet rset = null;
          String driver="oracle.jdbc.driver.OracleDriver";

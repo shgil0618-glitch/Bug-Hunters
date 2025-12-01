@@ -13,6 +13,24 @@ public class UserDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+<<<<<<< HEAD
+=======
+	public UserDto(int aPPUSERID, String pASSWORD, String nICKNAME, String eMAIL, String mOBILE,
+			LocalDateTime jOINDATE) {
+		super();
+		APPUSERID = aPPUSERID;
+		PASSWORD = pASSWORD;
+		NICKNAME = nICKNAME;
+		EMAIL = eMAIL;
+		MOBILE = mOBILE;
+		JOINDATE = jOINDATE;
+	}
+	@Override
+	public String toString() {
+		return "UserDto [APPUSERID=" + APPUSERID + ", PASSWORD=" + PASSWORD + ", NICKNAME=" + NICKNAME + ", EMAIL="
+				+ EMAIL + ", MOBILE=" + MOBILE + ", JOINDATE=" + JOINDATE + "]";
+	}
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 	public int getAPPUSERID() {
 		return APPUSERID;
 	}
@@ -49,6 +67,7 @@ public class UserDto {
 	public void setJOINDATE(LocalDateTime jOINDATE) {
 		JOINDATE = jOINDATE;
 	}
+<<<<<<< HEAD
 	public UserDto(int aPPUSERID, String pASSWORD, String nICKNAME, String eMAIL, String mOBILE,
 			LocalDateTime jOINDATE) {
 		super();
@@ -102,5 +121,9 @@ public class UserDto {
 	public void setMobile(String mOBILE) {
 		MOBILE = mOBILE;
 	}
+=======
+
+	
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 	
 }

@@ -17,6 +17,10 @@ public class UserDao {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+<<<<<<< HEAD
+=======
+		ResultSet rset=null;
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "scott", pass = "tiger";
@@ -27,16 +31,28 @@ public class UserDao {
 			conn = DriverManager.getConnection(url, user, pass);
 
 			pstmt = conn.prepareStatement(sql);
+<<<<<<< HEAD
 			pstmt.setString(1, dto.getPassword());
 			pstmt.setString(2, dto.getNickname());
 			pstmt.setString(3, dto.getEmail());
 			pstmt.setString(4, dto.getMobile());
 
 			result = pstmt.executeUpdate();
+=======
+			pstmt.setString(1, dto.getPASSWORD());
+			pstmt.setString(2, dto.getNICKNAME());
+			pstmt.setString(3, dto.getEMAIL());
+			pstmt.setString(4, dto.getMOBILE());
+
+			/* result = pstmt.executeUpdate(); */
+			int presult = pstmt.executeUpdate();
+ 			if(presult>0) {result=1;} 	//성공
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 
 		} catch (Exception e) {
 			System.out.println("DB 오류: " + e.getMessage());
 			e.printStackTrace();
+<<<<<<< HEAD
 		} finally {
 			try {
 				if (pstmt != null)
@@ -48,6 +64,12 @@ public class UserDao {
 					conn.close();
 			} catch (Exception e) {
 			}
+=======
+		} finally{
+			if(rset != null) {try { rset.close(); } catch (Exception e) { e.printStackTrace(); }}
+			if(pstmt != null) {try { pstmt.close(); } catch (Exception e) { e.printStackTrace(); }}
+			if(conn != null) {try { conn.close(); } catch (Exception e) { e.printStackTrace(); }}
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 		}
 
 		return result;
@@ -75,8 +97,13 @@ public class UserDao {
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				dto = new UserDto();
+<<<<<<< HEAD
 				dto.setEmail(rs.getString("EMAIL"));
 				dto.setPassword(rs.getString("PASSWORD"));
+=======
+				dto.setEMAIL(rs.getString("EMAIL"));
+				dto.setPASSWORD(rs.getString("PASSWORD"));
+>>>>>>> 78738172590cf0a8bddf80d29292165e29240d33
 			}
 			rs.close();
 		} catch (Exception e) {
