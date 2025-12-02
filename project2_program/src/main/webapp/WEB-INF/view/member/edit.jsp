@@ -1,61 +1,59 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/header.jsp" %>  <!-- 헤더 포함 -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
+<%@ include file="../inc/header.jsp"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!--    header       --> 
 <div class="container mt-5">
-    <h3>회원정보 수정</h3>
-    
-    <!-- 회원정보 수정 폼 -->
-   <%--  <form action="${pageContext.request.contextPath}/edit2.user" method="post" encType="multipart/form-data"> --%>
-   	<form action="${pageContext.request.contextPath}/security/edit" method="post" encType="multipart/form-data">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <!-- appUserId (숨겨진 필드로 전달) -->
-        <input type="hidden" name="appUserId" value="${dto.appUserId}" />
+    <h3>유저정보수정</h3>
+    <form action="${pageContext.request.contextPath}/security/update"  
+          method="post" enctype="multipart/form-data"> 
         
-        <!-- 이메일 필드 (수정 불가) -->
-        <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" value="${dto.email}" readonly />
-        </div>
+        <sec:csrfInput/>
         
-        <!-- 비밀번호 필드 -->
-        <div class="mb-3">
-            <label for="password" class="form-label">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호 입력 (변경하려면)" />
+        <input type="hidden" name="appUserId" value="${dto.appUserId}"> 
+        
+        <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Email:</label> 
+            <input type="email" class="form-control" id="email"
+                   placeholder="이메일을 입력해주세요" required  
+                   name="email" value="${dto.email}" readonly>
         </div>
         
         <div class="mb-3">
-            <label for="nickname" class="form-label">NICKNAME:</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="새 닉네임 입력 (변경하려면)" value="${dto.nickname}" />
+            <label for="nickname" class="form-label">Nickname:</label>  
+            <input type="text" class="form-control" id="nickname" 
+                   placeholder="닉네임을 입력해주세요" 
+                   name="nickname" value="${dto.nickname}">
         </div>
         
         <div class="mb-3">
-            <label for="mobile" class="form-label">MOBILE:</label>
-            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="새 전화번호 입력 (변경하려면)" value="${dto.mobile}" />
+            <label for="mobile" class="form-label">Phone number:</label>  
+            <input type="text" class="form-control" id="mobile" 
+                   placeholder="휴대폰 번호를 입력해주세요" 
+                   name="mobile" value="${dto.mobile}">
         </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label> 
+            <input type="password" class="form-control" id="password"
+                   placeholder="비밀번호를 입력해주세요" name="password">
+        </div>
+        
+        <div class="mb-3">
+            <label for="file" class="form-label">프로필이미지 수정</label>
+            <input type="file" class="form-control" id="file" 
+                   placeholder="파일을 입력해주세요" name="file">
+        </div>
+        
+        <div class="mb-3">
+            <input type="text" class="form-control" id="bfile" readonly  
+                   name="bfile" value="${dto.bfile}">
+        </div>          
 
-        <!-- MBTI 유형 선택 -->
-        <div class="mb-3">
-            <label for="mbtiTypeId" class="form-label">MBTI Type:</label>
-            <select class="form-select" id="mbtiTypeId" name="mbtiTypeId">
-                <option value="1" ${dto.mbtiTypeId == 1 ? 'selected' : ''}>INFJ</option>
-                <option value="2" ${dto.mbtiTypeId == 2 ? 'selected' : ''}>ENTP</option>
-                <option value="3" ${dto.mbtiTypeId == 3 ? 'selected' : ''}>INTP</option>
-                <!-- 더 많은 MBTI 유형을 추가할 수 있습니다 -->
-            </select>
-        </div>
-        
-        <div class="mb-3">
-		    <label for="file" class="form-label">file:</label>
-		    <input type="file" class="form-control" id="file" placeholder="파일을 입력해주세요" name="file"></input>
-		    <input type="text" class="form-control" readonly name="ufile" value="${dto.ufile}" />
-		    <img src="${pageContext.request.contextPath}/upload/${dto.ufile}"
-					alt="user image"
-					style="width: 150px; height: 100%; object-fit: cover; border-radius: 6px;" />
-		  </div> 
-
-        <!-- 버튼 -->
-        <button type="submit" class="btn btn-primary">정보 수정</button>
+        <button type="submit" class="btn btn-primary">정보수정</button>
     </form>
 </div>
-
-<%@ include file="../inc/footer.jsp" %>  <!-- 푸터 포함 -->
+<!-- ctrl + shift + f -->
+<!--    footer       --> 
+<%@ include file="../inc/footer.jsp"%>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="com/thejoa703/controller/|com/thejoa703/dto/" kind="src" path="Bug-Hunters/project1/src/main/java"/>
+	<classpathentry kind="src" path="Bug-Hunters/project1/src/main/java/com/thejoa703/controller"/>
+	<classpathentry kind="src" path="Bug-Hunters/project1/src/main/java/com/thejoa703/dto"/>
+	<classpathentry kind="src" path="Bug-Hunters/src/main/java"/>
+	<classpathentry kind="lib" path="Bug-Hunters/project1/src/main/webapp/WEB-INF/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="Bug-Hunters/project1/src/main/webapp/WEB-INF/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="Bug-Hunters/project1/src/main/webapp/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="output" path="Bug-Hunters/build/classes"/>
+</classpath>
