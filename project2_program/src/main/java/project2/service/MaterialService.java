@@ -1,11 +1,10 @@
-package project2.dao;
+package project2.service;
 
 import java.util.List;
 
 import project2.dto.MaterialDto;
 
-@MyDao
-public interface MaterialDao {
+public interface MaterialService {
 	public int insertMaterial(MaterialDto dto);
 	public int updateMaterial (MaterialDto dto);
 	public int deleteMaterial (MaterialDto dto);

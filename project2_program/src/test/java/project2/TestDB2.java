@@ -34,7 +34,7 @@ public class TestDB2 {
 
     ///// INSERT ///// 
 	
-	@Ignore @Test
+    @Ignore @Test
 	public void test() {
 //		 insert into material(
 //				    materialid, title, imageurl, season, temperature, calories100g,
@@ -64,9 +64,9 @@ public class TestDB2 {
 	System.out.println(dao.insertMaterial(dto));
 	} 
 	
-	@Ignore @Test public void test1() {
+    @Ignore @Test public void test1() {
 		MaterialDto dto = new MaterialDto();
-		dto.setMaterialid(1);      //.setmaterialid("1");
+		dto.setMaterialid(2);      //.setmaterialid("1");
 		System.out.println(dao.selectMaterial(dto));
 		//select * from material
 		//where materialid = 1;
@@ -95,17 +95,17 @@ public class TestDB2 {
 		dto.setCalories100g(150);
 		dto.setEfficacy("소화촉진, 장건강 도움");
 		dto.setBuyguide("면의 색깔 및 상태를 확인 후 구매한다");
-		dto.setTrimguide("면을 부서서 매밀 가루루로 사용한다.");
+		dto.setTrimguide("면을 부서서 매밀 가루로 사용한다.");
 		dto.setStoreguide("서늘하고 통풍이 잘 되는 곳에 보관한다.");
 		System.out.println(dao.updateMaterial(dto));
 	}
 	
-//	@Test public void test3() {
-////		delete from material where materialid=1;
-//		MaterialDto dto = new MaterialDto();
-//		dto.setMaterialid(1); dao.deleteMaterial(dto);
-//		
-//	}
+	@Ignore @Test public void test3() {
+//		delete from material where materialid=1;
+		MaterialDto dto = new MaterialDto();
+		dto.setMaterialid(1);
+		System.out.println(dao.deleteMaterial(dto));		
+	}
 }
 
 

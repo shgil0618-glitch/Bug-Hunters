@@ -10,7 +10,7 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
 	<!-- Step3 mybatis : mapper -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage"        value="project2.dao"   />
+		<property name="basePackage"        value="project2.dao"/>
 		<property name="annotationClass"    value="project2.dao.MyDao" />
 	</bean>
 	<context:component-scan base-package="project2" />
@@ -25,9 +25,8 @@
 		<property name="configLocation"  value="classpath:config/mybatis-config.xml"  />
 		<property name="mapperLocations" >
 			<list>
-				<value>classpath:config/test-mapper.xml</value>
-				<value>classpath:config/user-mapper.xml</value>
-				<value>classpath:config/appusermapper.xml</value>
+				<value>classpath:config/materialmapper.xml</value> 
+				<!-- <value>classpath:config/appusermapper.xml</value> -->
 			</list>
 		</property>
 	</bean>
