@@ -1,65 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project2.dao.AppUserMapper">
-
-   <resultMap  type="project2.dto.AppUser" id="AppuserMap">
-    <result property="appUserId" column="APP_USER_ID" />
-    <result property="email" column="EMAIL" />
-    <result property="password" column="PASSWORD" />
-    <result property="mbtiTypeId" column="MBTI_TYPE_ID" />
-    <result property="createdAt" column="CREATED_AT"/>
-    <result property="ufile" column="UFILE"/>
-    <result property="mobile" column="MOBILE"/>
-    <result property="nickname" column="NICKNAME"/>
-  </resultMap> 
-  
-	<resultMap  type="AuthDto" id="AuthMap">
-		<result property="email" column="EMAIL"/>
-    	<result property="auth" column="AUTH"/>
-	</resultMap>
+     <!-- 명시적 매핑 -->
+     <resultMap id="appUserMap" type="project2.dto.AppUserDto">
+       <result property="appUserId"      column="APPUSERID"/>
+       <result property="email"          column="EMAIL"/>
+       <result property="password"       column="PASSWORD"/>
+       <result property="nickname"       column="NICKNAME"/>
+       <result property="mobile"         column="MOBILE"/>
+       <result property="joindate"       column="JOINDATE"/>
+       <result property="bfile"          column="BFILE"/>
+     </resultMap>
+     
+     <resultMap id="authMap" type="project2.dto.AuthDto">
+       <result property="email"      column="EMAIL"/>
+       <result property="auth"       column="AUTH"/>
+     </resultMap>
+     
+     <resultMap id="appUserAuthMap" type="project2.dto.AppUserAuthDto">
+       <result property="email"         column="EMAIL"/>
+       <result property="password"      column="PASSWORD"/>
+       <collection property="authList"  resultMap="authMap"/>
+     </resultMap>
+     
+    <insert id="insert"  parameterType="project2.dto.AppUserDto">
+        insert into bug (APPUSERID , EMAIL, PASSWORD, NICKNAME, MOBILE, BFILE)  
+        values (users_seq.nextval, #{email} , #{password}, #{nickname}, #{mobile}, #{bfile})
+    </insert>
+    <update id="update"  parameterType="project2.dto.AppUserDto">
+        update bug  
+        set nickname=#{nickname}, mobile=#{mobile}, bfile=#{bfile}
+        where APPUSERID=#{appUserId}
+    </update>
+    <delete id="delete"  parameterType="project2.dto.AppUserDto">
+        delete from bug where APPUSERID=#{appUserId}
+    </delete>
+    <select resultMap="appUserMap"  id="selectAll">
+        select * from bug   order by APPUSERID desc
+    </select>
+    
+    <select resultMap="appUserMap"  id="select" parameterType="project2.dto.AppUserDto">
+        select * from bug   where APPUSERID=#{appUserId} 
+    </select>
+    
+    <select resultMap="appUserMap"  id="selectEmail"  parameterType="project2.dto.AppUserDto">
+        select * from bug   where EMAIL=#{email} 
+    </select>
+    
+    <select resultType="int"  id="selectLogin" parameterType="project2.dto.AppUserDto">
+        select count(*) cnt from bug  where  EMAIL=#{email}   and PASSWORD=#{password}
+    </select>
+    
+    <select resultMap="appUserMap"  id="selectPassword" parameterType="project2.dto.AppUserDto">
+        select password from bug  where email=#{email}
+    </select>
+    
+    <select resultMap="appUserMap"  id="findEmail" parameterType="project2.dto.AppUserDto">
+    	SELECT EMAIL FROM APPUSER WHERE MOBILE = #{mobile}
+    </select>
+    
+    <select resultMap="appUserMap"  id="findPassword" parameterType="project2.dto.AppUserDto">
+    	SELECT APPUSERID FROM   APPUSER WHERE EMAIL = #{email}  AND MOBILE = #{mobile}
+	</select>
 	
-	<resultMap  type="AppUserAuthDto" id="AppUserAuthMap">
-		<result property="email" column="EMAIL"/>
-    	<result property="password" column="PASSWORD"/>
-    	<collection property="authList" resultMap="AuthMap" />
-	</resultMap>
+	<select resultMap="appUserMap"  id="selectNickname" parameterType="project2.dto.AppUserDto">
+		SELECT COUNT(*) AS CNT  FROM APPUSER  WHERE NICKNAME = #{nickname}
+	</select>
 
-   <insert  id="insert"   parameterType="AppUser">
-     insert into appuser (APP_USER_ID , EMAIL , PASSWORD, MBTI_TYPE_ID ,UFILE   ,MOBILE ,  NICKNAME)  
-   values (appuser_seq.nextval, #{email} , #{password} ,#{mbtiTypeId} , #{ufile} ,#{mobile} , #{nickname}  )
-  </insert>
-  
-    <insert  id="insertAuth"    parameterType="AuthDto">
+    
+   <!-- SECURITY -->
+   <!-- SECURITY -->
+   <insert  id="insertAuth"    parameterType="project2.dto.AuthDto">
       insert into  authorities  (email, auth)  values (#{email} , #{auth})
    </insert>   
-   
-  <update  id="update"   parameterType="AppUser">
-    update  appuser  
-    set  MBTI_TYPE_ID=#{mbtiTypeId} ,UFILE=#{ufile}   ,MOBILE=#{mobile} ,  NICKNAME=#{nickname}     
-    where   APP_USER_ID=#{appUserId} 
-  </update>
   
-  
-  <delete  id="delete"   parameterType="AppUser">
-     delete from   appuser   where   APP_USER_ID=#{appUserId}
-  </delete>
-  
-  
-	
-  
-  <select  resultMap="AppUserAuthMap"  id="readAuth"        parameterType="AppUser">
-    select     u.email, password, auth
-    from       appuser u    left join   authorities a   on  u.email = a.email  
-    where      u.email=#{email} 
-  </select>
-  
-  <select  resultMap="AppuserMap"         id="select"          parameterType="AppUser">
-     select * from appuser  where  email=#{email} 
-  </select>
-  
-  <select  resultMap="AppuserMap"   id="selectPassword"  parameterType="AppUser">
-     select password from appuser  where  email=#{email} 
-  </select>
+   <select resultMap="appUserAuthMap" id="readAuth" parameterType="project2.dto.AppUserDto">
+	    select u.EMAIL, u.PASSWORD, a.AUTH 
+	    from bug u 
+	    left outer join authorities a on u.EMAIL = a.EMAIL 
+	    where u.EMAIL = #{email}
+	</select>
+       
 </mapper>
-

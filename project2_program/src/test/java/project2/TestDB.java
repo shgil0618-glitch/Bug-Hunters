@@ -12,99 +12,92 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.mock.web.*;
 
 import project2.dao.AppUserMapper;
-import project2.dto.AppUser;
+import project2.dto.AppUserDto;
 import project2.service.AppUserSecurityService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:config/root-context.xml", "classpath:config/security-context.xml" })
+@ContextConfiguration(locations = {
+    "classpath:config/root-context.xml",
+    "classpath:config/security-context.xml"
+})
 public class TestDB {
-	@Autowired ApplicationContext context;
-	@Autowired DataSource ds;
-	@Autowired SqlSession sqlSession;
-	@Autowired AppUserMapper dao;
-	@Autowired PasswordEncoder pwencoder;
-	@Autowired AppUserSecurityService service;
+    @Autowired ApplicationContext context;
+    @Autowired DataSource ds;      
+    @Autowired SqlSession sqlSession;
+    @Autowired AppUserMapper dao;
+    @Autowired PasswordEncoder pwencoder;
+    @Autowired AppUserSecurityService service;
+    
+    
 	
-	@Ignore @Test
-	public void test9() {
-		AppUser dto = new AppUser();
-		MockMultipartFile file = new MockMultipartFile("file","file.txt","text/plain","".getBytes());
-		dto.setEmail("6@6");
-		dto.setPassword("6");
-		dto.setMbtiTypeId(1);
-		dto.setUfile("1.png");
-		dto.setMobile("010-3423-1233");
-		dto.setNickname("한승현");
-		System.out.println("9. " + service.insert(file,dto));
-	}
 
-	@Ignore @Test
-	public void test1() {
-		System.out.println(context);
-	}
-
-	@Ignore@Test
-	public void test2() {
-		System.out.println(ds);
-	}
-
-	@Ignore@Test
+	 
+//	@Test
+//	public void test() {
+//		AppUserDto dto = new AppUserDto();
+//		dto.setPassword( "1" );
+//		dto.setNickname("name");
+//		dto.setEmail("1@1");
+//		dto.setMobile("1");
+//		dto.setBfile("1.png");
+//		MockMultipartFile file = new MockMultipartFile("file", "file.text", "text-plan", "".getBytes());
+//		System.out.println(service.insert(file, dto));
+//	}
+	
+//	@Test
+//	public void test2() {
+//		AppUserDto dto = new AppUserDto();
+//		dto.setAppUserId(128);
+//		dto.setPassword("3");
+//		dto.setEmail("3@3");
+//		System.out.println(service.delete(dto));
+//	} 
+    @Ignore @Test
 	public void test3() {
-		System.out.println(sqlSession);
-	}
-
-	@Ignore @Test
-	public void test4() {
-		AppUser dto = new AppUser();
-		dto.setEmail("b@b");
-		dto.setPassword("1111");
-		dto.setMbtiTypeId(1);
-		dto.setUfile("1.png");
-		dto.setMobile("010-3423-1233");
-		dto.setNickname("한승현");
-		System.out.println("4. " + dao.insert(dto));
-	}
-
-	@Test
-	public void test5() {
-		AppUser dto = new AppUser(); 
-		dto.setPassword("1234");
-		dto.setEmail("6@6");
-		dto.setMbtiTypeId(1);
-		MockMultipartFile file = new MockMultipartFile("file","file.txt","text/plain","".getBytes());
-		dto.setUfile("2.png");
-		dto.setMobile("010-3423-1233");
-		dto.setNickname("현승한");
-		dto.setAppUserId(79);
-		System.out.println("5. " + service.update(file,dto));
-	}
-
-	@Ignore @Test
-	public void test6() {
-		AppUser dto = new AppUser();
-		dto.setAppUserId(65);
-		dto.setPassword("11111");
-		dto.setEmail("4@4");
-		System.out.println("6. " + service.delete(dto));
-	}
-
-	@Ignore @Test
-	public void test7() {
-		AppUser dto = new AppUser();
+    	AppUserDto dto = new AppUserDto();
+    	dto.setPassword( "1" );
+		dto.setNickname("name");
 		dto.setEmail("1@1");
-		System.out.println("7. " + dao.readAuth(dto));
-	}
+		dto.setMobile("1");
+		dto.setBfile("1.png");
+		MockMultipartFile file = new MockMultipartFile("file2", "file2.text", "text-plan", "".getBytes());
+		dto.setAppUserId(129);
+		System.out.println(service.update(file, dto));
+    }
+    
+	 
 
-	@Ignore @Test
-	public void test8() {
-		AppUser dto = new AppUser();
-		dto.setEmail("1@1");
-		System.out.println("8. " + dao.select(dto));
-	}
+    ///// INSERT ///// 
 	
+	  @Test public void test() { AppUserDto dto = new AppUserDto();
+	  dto.setAppUserId(2); dto.setPassword(pwencoder.encode("2"));
+	  dto.setNickname("name"); dto.setEmail("2@2"); dto.setMobile("01022111111");
+	  dto.setBfile(""); System.out.println(dao.insert(dto)); }
+	
+   
+    ///// UPDEATE/////
+	/*
+	 * @Test public void test2() { AppUserDto dto = new AppUserDto();
+	 * dto.setAppUserId(2); dto.setPassword(pwencoder.encode("2"));
+	 * dto.setNickname("name"); dto.setMobile("01022211111"); dto.setBfile("");
+	 * System.out.println(dao.update(dto)); }
+	 */
+    
+    ///// DELETE /////
+	
+	/*
+	 * @Test public void test3() { AppUserDto dto = new AppUserDto();
+	 * dto.setAppUserId(109); dao.delete(dto); }
+	 **/
+    
+    ///// SELECT /////
 
+	
+//	 @Test public void test4() { AppUserDto dto = new AppUserDto();
+//	 dto.setEmail("2@2"); System.out.println(dao.selectEmail(dto)); }
+	 
+    
+    
 }

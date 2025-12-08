@@ -7,21 +7,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import project2.dto.AppUserAuthDto;
-
 import lombok.Getter;
+import project2.dto.AppUserAuthDto;
 
 @Getter
 public class CustomUser extends User{
 	
-	project2.dto.AppUserAuthDto dto;
+	AppUserAuthDto dto;
 	
 	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 		
 	}
 
-	public CustomUser(project2.dto.AppUserAuthDto dto) {
+	public CustomUser(AppUserAuthDto dto) {
 		super(dto.getEmail(),
 			  dto.getPassword(),
 			  dto.getAuthList().stream()

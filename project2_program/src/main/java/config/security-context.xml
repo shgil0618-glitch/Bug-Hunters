@@ -19,21 +19,24 @@
    <security:http>
       <security:intercept-url  pattern="/security/all"      access="permitAll" />
       <security:intercept-url  pattern="/security/member"   access="hasRole('ROLE_MEMBER')" />
+      <security:intercept-url  pattern="/security/login"    access="permitAll" />
+      <security:intercept-url  pattern="/security/join"     access="permitAll" />
+      <security:intercept-url  pattern="/security/**"       access="isAuthenticated()" />
+      <security:intercept-url  pattern="/iddouble"          access="permitAll" />
       
-      <security:intercept-url  pattern="/security/login"      access="permitAll" />
-      <security:intercept-url  pattern="/security/join"      access="permitAll" />
-      <security:intercept-url  pattern="/security/**"      access="isAuthenticated()" />
       
       <security:form-login
       	login-page="/security/login"
       	authentication-success-handler-ref="succeHandeler"
       	authentication-failure-forward-url="/security/fail"
+      	login-processing-url="/login"
       />
-      <security:logout
-      	logout-url="/security/logout"
-      	logout-success-url="/security/login"
-      	invalidate-session="true"
-      />	
+
+      <security:logout     
+		logout-url="/security/logout"
+		logout-success-url="/security/login"
+		invalidate-session="true"
+	  />
    </security:http>
 	
    <security:authentication-manager>   
