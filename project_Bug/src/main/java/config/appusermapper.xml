@@ -3,88 +3,126 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project2.dao.AppUserMapper">
-     <!-- 명시적 매핑 -->
-     <resultMap id="appUserMap" type="project2.dto.AppUserDto">
-       <result property="appUserId"      column="APPUSERID"/>
-       <result property="email"          column="EMAIL"/>
-       <result property="password"       column="PASSWORD"/>
-       <result property="nickname"       column="NICKNAME"/>
-       <result property="mobile"         column="MOBILE"/>
-       <result property="joindate"       column="JOINDATE"/>
-       <result property="bfile"          column="BFILE"/>
-     </resultMap>
-     
-     <resultMap id="authMap" type="project2.dto.AuthDto">
-       <result property="email"      column="EMAIL"/>
-       <result property="auth"       column="AUTH"/>
-     </resultMap>
-     
-     <resultMap id="appUserAuthMap" type="project2.dto.AppUserAuthDto">
-       <result property="email"         column="EMAIL"/>
-       <result property="password"      column="PASSWORD"/>
-       <collection property="authList"  resultMap="authMap"/>
-     </resultMap>
-<<<<<<< HEAD
-    
-=======
-  
->>>>>>> origin/master
-    <insert id="insert"  parameterType="project2.dto.AppUserDto">
-        insert into bug (APPUSERID , EMAIL, PASSWORD, NICKNAME, MOBILE, BFILE)  
-        values (users_seq.nextval, #{email} , #{password}, #{nickname}, #{mobile}, #{bfile})
-    </insert>
-    <update id="update"  parameterType="project2.dto.AppUserDto">
-        update bug  
-        set nickname=#{nickname}, mobile=#{mobile}, bfile=#{bfile}
-        where APPUSERID=#{appUserId}
-    </update>
-    <delete id="delete"  parameterType="project2.dto.AppUserDto">
-        delete from bug where APPUSERID=#{appUserId}
-    </delete>
-    <select resultMap="appUserMap"  id="selectAll">
-        select * from bug   order by APPUSERID desc
-    </select>
-    
-    <select resultMap="appUserMap"  id="select" parameterType="project2.dto.AppUserDto">
-        select * from bug   where APPUSERID=#{appUserId} 
-    </select>
-    
-    <select resultMap="appUserMap"  id="selectEmail"  parameterType="project2.dto.AppUserDto">
-        select * from bug   where EMAIL=#{email} 
-    </select>
-    
-    <select resultType="int"  id="selectLogin" parameterType="project2.dto.AppUserDto">
-        select count(*) cnt from bug  where  EMAIL=#{email}   and PASSWORD=#{password}
-    </select>
-    
-    <select resultMap="appUserMap"  id="selectPassword" parameterType="project2.dto.AppUserDto">
-        select password from bug  where email=#{email}
-    </select>
-    
-    <select resultMap="appUserMap"  id="findEmail" parameterType="project2.dto.AppUserDto">
-    	SELECT EMAIL FROM APPUSER WHERE MOBILE = #{mobile}
-    </select>
-    
-    <select resultMap="appUserMap"  id="findPassword" parameterType="project2.dto.AppUserDto">
-    	SELECT APPUSERID FROM   APPUSER WHERE EMAIL = #{email}  AND MOBILE = #{mobile}
-	</select>
-	
-	<select resultMap="appUserMap"  id="selectNickname" parameterType="project2.dto.AppUserDto">
-		SELECT COUNT(*) AS CNT  FROM APPUSER  WHERE NICKNAME = #{nickname}
+	<!-- 명시적 매핑 -->
+	<resultMap id="appUserMap" type="project2.dto.AppUserDto">
+		<result property="appUserId" column="APPUSERID" />
+		<result property="email" column="EMAIL" />
+		<result property="password" column="PASSWORD" />
+		<result property="nickname" column="NICKNAME" />
+		<result property="mobile" column="MOBILE" />
+		<result property="joindate" column="JOINDATE" />
+		<result property="bfile" column="BFILE" />
+	</resultMap>
+
+	<resultMap id="authMap" type="project2.dto.AuthDto">
+		<result property="email" column="EMAIL" />
+		<result property="auth" column="AUTH" />
+	</resultMap>
+
+	<resultMap id="appUserAuthMap"
+		type="project2.dto.AppUserAuthDto">
+		<result property="email" column="EMAIL" />
+		<result property="password" column="PASSWORD" />
+		<collection property="authList" resultMap="authMap" />
+	</resultMap>
+
+	<insert id="insert" parameterType="project2.dto.AppUserDto">
+		insert into bug (APPUSERID , EMAIL, PASSWORD, NICKNAME, MOBILE, BFILE)
+		values (users_seq.nextval, #{email} , #{password}, #{nickname},
+		#{mobile}, #{bfile})
+	</insert>
+	<update id="update" parameterType="project2.dto.AppUserDto">
+       update bug set nickname = #{nickname}, password = #{password}, bfile=#{bfile} where APPUSERID = #{appUserId}
+   </update>
+	<delete id="delete" parameterType="project2.dto.AppUserDto">
+		delete from bug where APPUSERID=#{appUserId}
+	</delete>
+	<select resultMap="appUserMap" id="selectAll">
+		select * from bug order by APPUSERID desc
 	</select>
 
-    
-   <!-- SECURITY -->
-   <!-- SECURITY -->
-   <insert  id="insertAuth"    parameterType="project2.dto.AuthDto">
-      insert into  authorities  (email, auth)  values (#{email} , #{auth})
-   </insert>   
-  
-   <select resultMap="appUserAuthMap" id="readAuth" parameterType="project2.dto.AppUserDto">
-	    select u.EMAIL, u.PASSWORD, a.AUTH 
-	    from bug u 
-	    left outer join authorities a on u.EMAIL = a.EMAIL 
-	    where u.EMAIL = #{email}
+	<select resultMap="appUserMap" id="select"
+		parameterType="project2.dto.AppUserDto">
+		select * from bug where APPUSERID=#{appUserId}
 	</select>
-       
+
+	<select resultMap="appUserMap" id="selectEmail"
+		parameterType="project2.dto.AppUserDto">
+		select * from bug where EMAIL=#{email}
+	</select>
+
+	<select resultMap="appUserMap" id="selectNickname"
+		parameterType="project2.dto.AppUserDto">
+		select * from bug where NICKNAME=#{nickname}
+	</select>
+
+	<select resultType="int" id="selectLogin"
+		parameterType="project2.dto.AppUserDto">
+		select count(*) cnt from bug where EMAIL=#{email} and PASSWORD=#{password}
+	</select>
+
+	<select resultMap="appUserMap" id="selectPassword"
+		parameterType="project2.dto.AppUserDto">
+		select password from bug where email=#{email}
+	</select>
+
+	<select id="findEmail" parameterType="string"
+		resultType="string">
+		SELECT EMAIL FROM bug WHERE MOBILE = #{mobile}
+	</select>
+
+	<select id="selectMobile" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM bug WHERE mobile = #{mobile}
+	</select>
+
+	<update id="updatePassword"
+		parameterType="project2.dto.AppUserDto">
+		UPDATE bug SET PASSWORD = #{password} WHERE EMAIL = #{email} AND MOBILE =
+		#{mobile}
+	</update>
+	
+	<update id="updateNickname">
+       UPDATE bug SET NICKNAME = #{nickname} WHERE APPUSERID = #{appUserId}
+   </update>
+
+	<select resultType="int" id="nickdouble"
+		parameterType="project2.dto.AppUserDto">
+		SELECT COUNT(*) FROM bug WHERE NICKNAME = #{nickname}
+	</select>
+
+	<select id="checkAuth" parameterType="project2.dto.AuthDto"
+		resultType="int">
+		SELECT COUNT(*) FROM authorities WHERE email = #{email} AND auth = #{auth}
+	</select>
+
+	<!-- <select resultMap="appUserMap" id="selectNickname"
+		parameterType="project2.dto.AppUserDto"> SELECT COUNT(*) AS CNT FROM bug WHERE NICKNAME =
+		#{nickname} </select> -->
+		
+	<!-- 닉네임 조회 -->
+	<select id="selectNicknameByUserId" resultType="String"> SELECT NICKNAME
+		FROM bug WHERE APPUSERID = #{appUserId} </select>
+
+
+	<!-- SECURITY -->
+	<!-- SECURITY -->
+	<insert id="insertAuth" parameterType="project2.dto.AuthDto">
+		insert into authorities (email, auth) values (#{email} , #{auth})
+	</insert>
+
+	<select resultMap="appUserAuthMap" id="readAuth"
+		parameterType="project2.dto.AppUserDto">
+		select u.EMAIL, u.PASSWORD, a.AUTH
+		from bug u
+		left outer join authorities a on u.EMAIL = a.EMAIL
+		where u.EMAIL = #{email}
+	</select>
+
+	<delete id="deleteAuthByEmail" parameterType="string">
+		delete from authorities where EMAIL=#{email}
+	</delete>
+	
+	
+
 </mapper>

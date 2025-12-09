@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project2.dao.RecipeDao">
+
+    <!-- ResultMap 정의 -->
+    <resultMap id="recipeDtoResultMap" type="project2.dto.RecipeDto">
+        <id property="recipeId" column="RECIPE_ID"/>
+        <result property="appUserId" column="APPUSERID"/>
+        <result property="title" column="TITLE"/>
+        <result property="category" column="CATEGORY"/>
+        <result property="categoryName" column="CATEGORY_NAME"/>
+        <result property="image" column="IMAGE"/>
+        <result property="cookTime" column="COOK_TIME"/>
+        <result property="difficulty" column="DIFFICULTY"/>
+        <result property="servings" column="SERVINGS"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="instructions" column="INSTRUCTIONS"/>
+        <result property="createdAt" column="CREATED_AT"/>
+        <result property="updatedAt" column="UPDATED_AT"/>
+        <result property="views" column="VIEWS"/>
+        <result property="nickname" column="NICKNAME"/>
+        <result property="ingreMapId" column="INGRE_MAP_ID"/>
+	    <result property="ingreName" column="INGRE_NAME"/> 
+	    <result property="ingreNum" column="INGRE_NUM"/>
+	        
+          <!-- JOIN된 CATEGORY -->
+    <result property="categoryName" column="CATEGORY_NAME"/>
+
+    <!-- JOIN된 BUG(AppUser) -->
+    <result property="nickname" column="NICKNAME"/>
+    </resultMap>
+
+    <resultMap id="recipeImageResultMap" type="project2.dto.RecipeImage">
+        <result property="recipeId" column="RECIPE_ID"/>
+        <result property="rurl" column="RURL"/>
+    </resultMap>
+
+    <resultMap id="recipeIngreResultMap" type="project2.dto.RecipeIngre">
+        <result property="ingreMapId" column="INGRE_MAP_ID"/>
+        <result property="ingreName" column="INGRE_NAME"/>
+        <result property="ingreNum" column="INGRE_NUM"/>
+    </resultMap>
+
+    <!-- SQL 쿼리 정의 -->
+    <!-- 레시피 등록: RECIPE_ID를 시퀀스로 생성 -->
+    <insert id="insert" parameterType="project2.dto.RecipeDto">
+        <selectKey keyProperty="recipeId" resultType="int" order="BEFORE">
+            SELECT recipes_seq.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO recipes (
+    RECIPE_ID, APPUSERID, TITLE, CATEGORY, IMAGE,
+    COOK_TIME, DIFFICULTY, SERVINGS, DESCRIPTION, INSTRUCTIONS
+)
+VALUES (
+    #{recipeId},
+    #{appUserId},
+    #{title},
+    #{category},
+    #{image, jdbcType=VARCHAR},
+    #{cookTime},
+    #{difficulty},
+    #{servings},
+    #{description},
+    #{instructions}
+)
+
+    </insert>
+
+    <insert id="insertRecipeImage" parameterType="project2.dto.RecipeImage">
+        INSERT INTO recipes_img (RECIPE_ID, RURL)
+        VALUES (#{recipeId}, #{rurl})
+    </insert>
+
+    <!-- 재료 매핑: INGRE_MAP_ID를 시퀀스로 생성 -->
+    <insert id="insertIngredientMap" parameterType="project2.dto.RecipeIngreMap">
+        <selectKey keyProperty="ingreMapId" resultType="int" order="BEFORE">
+            SELECT recipes_ingre_map_seq.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO recipes_ingre_map (INGRE_MAP_ID, RECIPE_ID)
+        VALUES (#{ingreMapId}, #{recipeId})
+    </insert>
+
+    <insert id="insertIngredientDetail" parameterType="project2.dto.RecipeIngre">
+        INSERT INTO recipes_ingre (INGRE_MAP_ID, INGRE_NAME, INGRE_NUM)
+        VALUES (#{ingreMapId}, #{ingreName}, #{ingreNum})
+    </insert>
+
+    <!-- 데이터 조회 쿼리 -->
+    <select id="selectAll" resultMap="recipeDtoResultMap">
+        SELECT r.RECIPE_ID,
+               r.APPUSERID, r.TITLE, r.CATEGORY, c.CATEGORY_NAME,
+               r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS,
+               r.DESCRIPTION, r.INSTRUCTIONS,
+               r.CREATED_AT, r.UPDATED_AT, r.VIEWS,
+               b.NICKNAME AS NICKNAME
+        FROM recipes r
+        LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+        LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+        ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC
+    </select>
+
+    <select id="selectMyRecipes" resultMap="recipeDtoResultMap" parameterType="int">
+        SELECT r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY, c.CATEGORY_NAME,
+               r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS,
+               r.DESCRIPTION, r.INSTRUCTIONS,
+               r.CREATED_AT, r.UPDATED_AT, r.VIEWS,
+               b.NICKNAME AS NICKNAME
+        FROM recipes r
+        LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+        LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+        WHERE r.APPUSERID = #{appUserId}
+        ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC
+    </select>
+
+    <select id="select" resultMap="recipeDtoResultMap" parameterType="int">
+        SELECT r.RECIPE_ID, r.APPUSERID, r.TITLE, r.DESCRIPTION, r.INSTRUCTIONS,
+               r.COOK_TIME, r.DIFFICULTY, r.SERVINGS, r.VIEWS,
+               r.CREATED_AT, r.UPDATED_AT, r.CATEGORY, c.CATEGORY_NAME,
+               b.NICKNAME AS NICKNAME
+        FROM recipes r
+        LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+        LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+        WHERE r.RECIPE_ID = #{recipeId}
+    </select>
+
+    <select id="selectMaxRecipeId" resultType="int">
+        SELECT NVL(MAX(RECIPE_ID), 0) FROM recipes
+    </select>
+
+    <select id="selectRecipeImages" resultMap="recipeImageResultMap" parameterType="int">
+        SELECT RECIPE_ID, RURL
+        FROM recipes_img
+        WHERE RECIPE_ID = #{recipeId}
+    </select>
+
+    <select id="selectRecipeIngredients" resultMap="recipeIngreResultMap" parameterType="int">
+        SELECT i.INGRE_NAME, i.INGRE_NUM, m.INGRE_MAP_ID
+        FROM recipes_ingre_map m
+        JOIN recipes_ingre i ON m.INGRE_MAP_ID = i.INGRE_MAP_ID
+        WHERE m.RECIPE_ID = #{recipeId}
+    </select>
+
+    <select id="selectCategoryNameById" resultType="String">
+        SELECT CATEGORY_NAME
+        FROM CATEGORY
+        WHERE CATEGORY = #{categoryId}
+    </select>
+    
+    <select id="selectRecipeTotalCount" resultType="int">
+        SELECT COUNT(*) FROM recipes
+    </select>
+    
+    <!--  ajax - search	 -->
+    <!--  ajax - search	 -->
+    <!--  ajax - search	 -->
+    
+	<select id="selectSearchTitle" resultMap="recipeDtoResultMap"
+		parameterType="java.util.HashMap"> SELECT r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY,
+		c.CATEGORY_NAME, r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS,
+		r.DESCRIPTION, r.INSTRUCTIONS, r.CREATED_AT, r.UPDATED_AT, r.VIEWS,
+		b.NICKNAME AS NICKNAME FROM recipes r LEFT JOIN CATEGORY c ON
+		r.CATEGORY = c.CATEGORY LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+		WHERE r.TITLE LIKE #{search} ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT)
+		DESC </select>
+		
+	<select id="selectSearchCategory" resultMap="recipeDtoResultMap"
+		parameterType="java.util.HashMap"> SELECT r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY,
+		c.CATEGORY_NAME, r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS,
+		r.DESCRIPTION, r.INSTRUCTIONS, r.CREATED_AT, r.UPDATED_AT, r.VIEWS,
+		b.NICKNAME AS NICKNAME FROM recipes r LEFT JOIN CATEGORY c ON
+		r.CATEGORY = c.CATEGORY LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+		WHERE c.CATEGORY_NAME LIKE #{search} ORDER BY NVL(r.UPDATED_AT,
+		r.CREATED_AT) DESC </select>
+		
+	<select id="searchBoth" parameterType="hashmap"
+		resultMap="recipeDtoResultMap">
+		SELECT r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY, c.CATEGORY_NAME,
+		r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS, r.DESCRIPTION,
+		r.INSTRUCTIONS, r.CREATED_AT, r.UPDATED_AT, r.VIEWS, b.NICKNAME AS
+		NICKNAME FROM recipes r LEFT JOIN CATEGORY c ON r.CATEGORY =
+		c.CATEGORY LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+		<!-- ⭐ 여기서 제목 + 카테고리명 동시에 검색 -->
+		WHERE r.TITLE LIKE #{search} OR c.CATEGORY_NAME LIKE #{search} ORDER
+		BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC
+	</select>
+	
+	<select id="searchBothCount" parameterType="hashmap" resultType="int">
+    SELECT COUNT(*)
+    FROM recipes r
+    LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+    <where>
+        <if test="keyword != null and keyword != ''">
+            (r.TITLE LIKE #{keyword} OR c.CATEGORY_NAME LIKE #{keyword})
+        </if>
+        <if test="category != null and category != '' and category != '전체'">
+            AND c.CATEGORY_NAME = #{category}
+        </if>
+    </where>
+</select>
+
+<select id="searchBothPaging" parameterType="hashmap" resultMap="recipeDtoResultMap">
+    SELECT * FROM (
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC) AS rnum,
+            r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY, 
+            c.CATEGORY_NAME, r.IMAGE, r.COOK_TIME, 
+            r.DIFFICULTY, r.SERVINGS, r.DESCRIPTION,
+            r.INSTRUCTIONS, r.CREATED_AT, 
+            r.UPDATED_AT, r.VIEWS, 
+            b.NICKNAME AS NICKNAME
+        FROM recipes r
+        LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+        LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (r.TITLE LIKE #{keyword} OR c.CATEGORY_NAME LIKE #{keyword})
+            </if>
+            <if test="category != null and category != '' and category != '전체'">
+                AND c.CATEGORY_NAME = #{category}
+            </if>
+        </where>
+    ) A
+    WHERE A.rnum BETWEEN #{rStart} AND #{rEnd}
+</select>
+	
+	
+	
+	<select id="selectRecipeListPaging"
+		resultMap="recipeDtoResultMap" parameterType="java.util.HashMap"> SELECT * FROM ( SELECT
+		ROW_NUMBER() OVER (ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC) AS
+		rnum, r.RECIPE_ID, r.APPUSERID, r.TITLE, r.CATEGORY, c.CATEGORY_NAME,
+		r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS, r.DESCRIPTION,
+		r.INSTRUCTIONS, r.CREATED_AT, r.UPDATED_AT, r.VIEWS, b.NICKNAME AS
+		NICKNAME FROM recipes r LEFT JOIN CATEGORY c ON r.CATEGORY =
+		c.CATEGORY LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID ) A WHERE
+		A.rnum BETWEEN #{start} AND #{end} </select>
+
+
+
+  <!--  <select id="selectSearchCategory"
+        resultMap="recipeDtoResultMap"
+        parameterType="java.util.HashMap">
+
+    SELECT r.RECIPE_ID,
+           r.APPUSERID,
+           r.TITLE,
+           r.CATEGORY,
+           c.CATEGORY_NAME,
+           r.IMAGE,
+           r.COOK_TIME,
+           r.DIFFICULTY,
+           r.SERVINGS,
+           r.DESCRIPTION,
+           r.INSTRUCTIONS,
+           r.CREATED_AT,
+           r.UPDATED_AT,
+           r.VIEWS,
+           b.NICKNAME AS NICKNAME
+    FROM RECIPES r
+    LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+    LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+    WHERE c.CATEGORY_NAME LIKE #{search}
+    ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC
+</select>
+
+    
+
+    <select id="selectRecipeListPaging" resultMap="recipeDtoResultMap" parameterType="java.util.HashMap">
+        SELECT *
+        FROM (
+            SELECT 
+                ROW_NUMBER() OVER (ORDER BY NVL(r.UPDATED_AT, r.CREATED_AT) DESC) AS rnum, 
+                r.RECIPE_ID,
+                r.APPUSERID, r.TITLE, r.CATEGORY, c.CATEGORY_NAME,
+                r.IMAGE, r.COOK_TIME, r.DIFFICULTY, r.SERVINGS,
+                r.DESCRIPTION, r.INSTRUCTIONS,
+                r.CREATED_AT, r.UPDATED_AT, r.VIEWS,
+                b.NICKNAME AS NICKNAME
+            FROM recipes r
+            LEFT JOIN CATEGORY c ON r.CATEGORY = c.CATEGORY
+            LEFT JOIN BUG b ON r.APPUSERID = b.APPUSERID
+        ) A
+        WHERE A.rnum BETWEEN #{start} AND #{end}
+    </select>
+ -->
+    <!-- 업데이트 및 삭제 쿼리 -->
+    <update id="incrementRecipeViews" parameterType="int">
+        UPDATE recipes
+        SET VIEWS = VIEWS + 1
+        WHERE RECIPE_ID = #{recipeId}
+    </update>
+
+    <update id="update" parameterType="project2.dto.RecipeDto">
+        UPDATE recipes
+        SET TITLE = #{title},
+            DESCRIPTION = #{description},
+            INSTRUCTIONS = #{instructions},
+            CATEGORY = #{category},
+            COOK_TIME = #{cookTime},
+            DIFFICULTY = #{difficulty},
+            SERVINGS = #{servings},
+            <if test="image != null and image != ''">
+                IMAGE = #{image},
+            </if>
+            UPDATED_AT = SYSDATE
+        WHERE RECIPE_ID = #{recipeId}
+          AND APPUSERID = #{appUserId}
+    </update>
+
+    <delete id="deleteRecipeImages" parameterType="int">
+        DELETE FROM recipes_img WHERE RECIPE_ID = #{recipeId}
+    </delete>
+
+    <delete id="deleteIngredientMaps" parameterType="int">
+        DELETE FROM recipes_ingre_map WHERE RECIPE_ID = #{recipeId}
+    </delete>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM recipes WHERE RECIPE_ID = #{recipeId}
+    </delete>
+
+</mapper>

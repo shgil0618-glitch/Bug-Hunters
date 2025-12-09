@@ -17,12 +17,19 @@
    <bean id="customUserDetailsService" class="project2.security.CustomUserDetailsService"/>
    
    <security:http>
-      <security:intercept-url  pattern="/security/all"      access="permitAll" />
-      <security:intercept-url  pattern="/security/member"   access="hasRole('ROLE_MEMBER')" />
-      <security:intercept-url  pattern="/security/login"    access="permitAll" />
-      <security:intercept-url  pattern="/security/join"     access="permitAll" />
-      <security:intercept-url  pattern="/security/**"       access="isAuthenticated()" />
-      <security:intercept-url  pattern="/iddouble"          access="permitAll" />
+      <security:intercept-url  pattern="/security/all"         access="permitAll" />
+      <security:intercept-url  pattern="/security/member"      access="hasRole('ROLE_MEMBER')" />
+      <security:intercept-url  pattern="/security/admin"       access="hasRole('ADMIN_MEMBER')" />
+      <security:intercept-url  pattern="/security/main"          access="permitAll" />
+      <security:intercept-url  pattern="/security/listmain"       access="permitAll" />
+      <security:intercept-url  pattern="/security/login"       access="permitAll" />
+      <security:intercept-url  pattern="/security/join"        access="permitAll" />
+      <security:intercept-url  pattern="/security/nickdouble"    access="permitAll"/>
+     <security:intercept-url  pattern="/security/iddouble"    access="permitAll"/>
+     <security:intercept-url  pattern="/security/mobiledouble" access="permitAll"/>
+     <security:intercept-url  pattern="/security/findEmail"    access="permitAll"/>
+     <security:intercept-url  pattern="/security/findPassword" access="permitAll"/>
+      <security:intercept-url  pattern="/security/**"             access="isAuthenticated()" />
       
       
       <security:form-login

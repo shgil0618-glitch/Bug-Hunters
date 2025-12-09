@@ -28,11 +28,24 @@ public class TestDB {
     @Autowired AppUserMapper dao;
     @Autowired PasswordEncoder pwencoder;
     @Autowired AppUserSecurityService service;
-    
-    
-	
 
-	 
+    @Test
+    public void test1() {
+        // DTO 객체 생성
+        AppUserDto dto = new AppUserDto();
+        dto.setAppUserId(1);
+        dto.setPassword(pwencoder.encode("1"));
+        dto.setNickname("1");
+        dto.setEmail("1@1");
+        dto.setMobile("1");
+        dto.setBfile(""); 
+
+     
+        int result = dao.insert(dto);
+        System.out.println("회원가입 insert 결과: " + result);
+   
+    }
+}
 //	@Test
 //	public void test() {
 //		AppUserDto dto = new AppUserDto();
@@ -53,18 +66,18 @@ public class TestDB {
 //		dto.setEmail("3@3");
 //		System.out.println(service.delete(dto));
 //	} 
-    @Test
-	public void test3() {
-    	AppUserDto dto = new AppUserDto();
-    	dto.setPassword( "1" );
-		dto.setNickname("name");
-		dto.setEmail("1@1");
-		dto.setMobile("1");
-		dto.setBfile("1.png");
-		MockMultipartFile file = new MockMultipartFile("file2", "file2.text", "text-plan", "".getBytes());
-		dto.setAppUserId(129);
-		System.out.println(service.update(file, dto));
-    }
+//    @Test
+//	public void test3() {
+//    	AppUserDto dto = new AppUserDto();
+//    	dto.setPassword( "1" );
+//		dto.setNickname("name");
+//		dto.setEmail("1@1");
+//		dto.setMobile("1");
+//		dto.setBfile("1.png");
+//		MockMultipartFile file = new MockMultipartFile("file2", "file2.text", "text-plan", "".getBytes());
+//		dto.setAppUserId(129);
+//		System.out.println(service.update(file, dto));
+//    }
     
 	 
 
@@ -98,5 +111,4 @@ public class TestDB {
 //	 dto.setEmail("2@2"); System.out.println(dao.selectEmail(dto)); }
 	 
     
-    
-}
+  

@@ -26,6 +26,8 @@
 		<property name="mapperLocations" >
 			<list>
 				<value>classpath:config/appusermapper.xml</value>
+				<value>classpath:config/materialmapper.xml</value>
+				<value>classpath:config/RecipeMapper.xml</value>
 			</list>
 		</property>
 	</bean>

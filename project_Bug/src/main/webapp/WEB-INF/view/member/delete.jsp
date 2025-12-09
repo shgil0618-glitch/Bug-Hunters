@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="container card my-5 p-4">
-    <h3 class="card-header"> MBTI 탈퇴</h3>
+    <h3 class="card-header"> 회원 탈퇴</h3>
     <form action="${pageContext.request.contextPath}/security/delete" 
           method="post"> 
 

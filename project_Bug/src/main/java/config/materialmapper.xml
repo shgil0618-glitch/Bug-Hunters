@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project2.dao.MaterialDao">
+
+	<resultMap id="materialMap" type="MaterialDto">
+		<result property="materialid" column="MATERIALID" />
+		<result property="title" column="TITLE" />
+		<result property="imageurl" column="IMAGEURL" />
+		<result property="season" column="SEASON" />
+		<result property="temperature" column="TEMPERATURE" />
+		<result property="calories100g" column="CALORIES100G" />
+		<result property="efficacy" column="EFFICACY" />
+		<result property="buyguide" column="BUYGUIDE" />
+		<result property="trimguide" column="TRIMGUIDE" />
+		<result property="storeguide" column="STOREGUIDE" />
+	</resultMap>
+	<insert id="insertMaterial" parameterType="MaterialDto">
+		insert into material
+		(MATERIALID, TITLE, IMAGEURL, SEASON, TEMPERATURE, CALORIES100G, EFFICACY,
+		BUYGUIDE, TRIMGUIDE, STOREGUIDE)
+		values
+		(material_seq.nextval, #{title}, #{imageurl, jdbcType=VARCHAR}, #{season}, #{temperature},
+		#{calories100g}, #{efficacy}, #{buyguide}, #{trimguide},#{storeguide})
+	</insert>
+	<insert id="insert2Material" parameterType="MaterialDto">
+		insert into material
+		(MATERIALID, TITLE, IMAGEURL, SEASON, TEMPERATURE, CALORIES100G, EFFICACY,
+		BUYGUIDE, TRIMGUIDE, STOREGUIDE)
+		values
+		(material_seq.nextval, #{title}, #{imageurl, jdbcType=VARCHAR}, #{season}, #{temperature},
+		#{calories100g}, #{efficacy}, #{buyguide}, #{trimguide},#{storeguide})
+	</insert>
+	<update id="updateMaterial" parameterType="MaterialDto">
+		update material set TITLE=#{title}, IMAGEURL=#{imageurl}, SEASON=#{season},
+		TEMPERATURE=#{temperature}, CALORIES100G=#{calories100g},
+		EFFICACY=#{efficacy}, BUYGUIDE=#{buyguide}, TRIMGUIDE=#{trimguide},
+		STOREGUIDE=#{storeguide}
+		where MATERIALID=#{materialid}
+	</update>
+	<update id="update2Material" parameterType="MaterialDto">
+		update material set TITLE=#{title}, IMAGEURL=#{imageurl}, SEASON=#{season},
+		TEMPERATURE=#{temperature}, CALORIES100G=#{calories100g},
+		EFFICACY=#{efficacy}, BUYGUIDE=#{buyguide}, TRIMGUIDE=#{trimguide},
+		STOREGUIDE=#{storeguide}
+		where MATERIALID=#{materialid}
+	</update>
+	<delete id="deleteMaterial" parameterType="int">
+		delete from material where MATERIALID=#{materialid}
+	</delete>
+	<select resultMap="materialMap" id="MaterialList">
+		select *from material order by materialid desc
+	</select>
+	<select resultMap="materialMap" id="selectMaterial"
+		parameterType="int">
+		select *from material where MATERIALID =#{materialid}
+	</select>
+	<select resultMap="materialMap" id="selectTitle"
+		parameterType="string">
+		select *from material where TITLE =#{title}
+	</select>
+	<select id="select10" resultMap="materialMap"
+		parameterType="java.util.HashMap">
+		select * from ( select row_number() over (order by materialid desc) as rnum,
+		materialid,
+		title,
+		imageurl,
+		season,
+		temperature,
+		calories100g,
+		efficacy,
+		buyguide,
+		trimguide,
+		storeguide
+		from material
+		) A
+		where A.rnum between#{start} AND #{end}
+	</select>
+	<select resultType="int" id="selectTotalCnt">
+		select count(*) from material
+	</select>
+
+</mapper>
