@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div th:if="${successMessage}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <h2 class="mb-4">로그인</h2>
+
+    <div sec:authorize="isAnonymous()">
+        <form th:action="@{/users/loginProc}" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">이메일</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">로그인</button>
+        </form>
+
+        <div class="mt-3 text-center">
+            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#findEmailModal">이메일 찾기</button>
+            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">비밀번호 재설정</button>
+        </div>
+
+        <div class="modal fade" id="findEmailModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="findEmailForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title">이메일 찾기</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="phoneNumber" class="form-label">휴대폰 번호</label>
+                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="01012345678" required>
+                            <div id="findEmailResult" class="mt-3 alert" style="display:none;"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">이메일 찾기</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="resetPasswordForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title">비밀번호 재설정</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="resetEmail" class="form-label">이메일</label>
+                            <input type="text" id="resetEmail" name="email" class="form-control" placeholder="이메일 입력" required>
+
+                            <label for="phoneNumber2" class="form-label mt-2">휴대폰 번호</label>
+                            <input type="text" id="phoneNumber2" name="phoneNumber" class="form-control" placeholder="01012345678" required>
+
+                            <label for="newPassword" class="form-label mt-2">새 비밀번호</label>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="새 비밀번호 입력" required>
+                            
+                            <div id="resetPwdResult" class="mt-3 alert" style="display:none;"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">비밀번호 변경</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <p class="alert alert-info">이미 로그인한 상태입니다.</p>
+        <a th:href="@{/users/mypage}" class="btn btn-success">마이페이지로 이동</a>
+    </div>
+
+    <div class="container my-5 text-center">
+        <div class="row">
+            <div class="col-sm-4"><a th:href="@{/oauth2/authorization/kakao}"><img src="/images/kakao.png" alt="kakao login"></a></div>
+            <div class="col-sm-4"><a th:href="@{/oauth2/authorization/naver}"><img src="/images/naver.png" alt="naver login"></a></div>
+            <div class="col-sm-4"><a th:href="@{/oauth2/authorization/google}"><img src="/images/google.png" alt="google login"></a></div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // 헤더에서 CSRF 정보 추출
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+        // 이메일 찾기
+        document.getElementById('findEmailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const resultDiv = document.getElementById('findEmailResult');
+
+            fetch('/users/find-email', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [csrfHeader]: csrfToken 
+                },
+                body: new URLSearchParams({ 'phoneNumber': phoneNumber })
+            })
+            .then(res => res.json())
+            .then(data => {
+                resultDiv.style.display = 'block';
+                resultDiv.innerText = data.message;
+                resultDiv.className = data.success ? 'mt-3 alert alert-success' : 'mt-3 alert alert-danger';
+            })
+            .catch(err => console.error('Error:', err));
+        });
+
+        // 비밀번호 재설정
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            const phoneNumber = document.getElementById('phoneNumber2').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const resultDiv = document.getElementById('resetPwdResult');
+
+            fetch('/users/reset-password', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [csrfHeader]: csrfToken 
+                },
+                body: new URLSearchParams({ 
+                    'email': email, 
+                    'phoneNumber': phoneNumber, 
+                    'newPassword': newPassword 
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                resultDiv.style.display = 'block';
+                resultDiv.innerText = data.message;
+                resultDiv.className = data.success ? 'mt-3 alert alert-success' : 'mt-3 alert alert-danger';
+            })
+            .catch(err => console.error('Error:', err));
+        });
+    </script>
+
+</div>
+</body>
+</html>
