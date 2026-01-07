@@ -174,7 +174,7 @@ public class AppUserServiceImpl implements AppUserService {
 	}
 
 	public boolean verifyRecaptcha(String recaptchaResponse) {
-		String secretKey = "6LeW5DosAAAAAOF74ympe-pRDaGyJ4bkuosfdFBG";
+		String secretKey = "";
 		String url = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response="
 				+ recaptchaResponse;
 
