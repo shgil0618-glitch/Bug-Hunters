@@ -38,11 +38,11 @@
 
 | 이름  | 역할 | GitHub                                                   |
 | --- | -- | -------------------------------------------------------- |
-| 길상현 | 팀장 | [깃허브 보기](https://github.com/shgil0618-glitch/fullstack_gsh.git) |
-| 강서현 | 팀원 | [깃허브 보기](https://github.com/kangseoyun-s/fullstack_seohyun.git)           |
-| 김영민 | 팀원 | [깃허브 보기](https://github.com/jesusjoy10/fullstack_youngmin.git)         |
-| 김정민 | 팀원 | [깃허브 보기](https://github.com/kyoungsjjj0211/jeongmin001.git)       |
-| 유희재 | 팀원 | [깃허브 보기](https://github.com/ryu199212-coder/Fullstack_Ryu.git)     |
+| 유희재 | 팀장 | [깃허브 보기](https://github.com/ryu199212-coder/Fullstack_Ryu.git) |
+| 길상현 | 팀원 | [깃허브 보기](https://github.com/shgil0618-glitch/fullstack_gsh.git)|
+| 김영민 | 팀원 | [깃허브 보기](https://github.com/jesusjoy10/fullstack_youngmin.git) |
+| 김정민 | 팀원 | [깃허브 보기](https://github.com/kyoungsjjj0211/jeongmin001.git)    |
+
 
 
 ---
@@ -70,19 +70,16 @@
 
 | 이름     | 자격증명          | 참여 여부 (O/X) | 신청일       | 취득 예정일   | 비고               |
 | -------- | ----------------- | --------------- | ------------ | ------------ | ------------------ |
-| 홍길동   | 정보처리기사       | O               | 2025-09-01   | 2025-12-15   | 준비 중            |
+|  유희재  | SQLD | O               | -            | -            |  |
 |  길상현  | 정보처리기사   | O          |  |    |                     |
-|  길상현  | sqld   | O          |  |    |                     |
+|  길상현  | SQLD   | O          |  |    |                     |
 |  길상현  | 컴퓨터활용능력 2급   |    X       |  |    |     시간이 괜찮으면 진행               |
 |  김정민  | 네트워크관리사 2급   |    O       |  |    |                     |
 |  김정민  | SQLD   |    O        |  |    |                     |
 |  김정민  | 정보처리기능사 1급  |    O        |  |    |  일정나오면 참여 예정               |
-|  강서현  |  SQLD          | O |    |                     |
-|  강서현  | 네트워크관리사 2급           | O |    |                     |
-|  강서현  | 데이터분석 준전문가            | O |    |                     |
 |  김영민  |     SQLD        | O |    |                     |
 |  김영민  | 네트워크관리사 2급 | O |           |  |    |                     |
-| 유희재   | sqld | O               | -            | -            |  |
+
 
 ---
 
