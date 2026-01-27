@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 th:text="${dto == null ? '재료 등록' : '재료 수정'}">재료 관리</h2>
+
+			<form th:action="@{/material/materialinsert}" method="post"
+				enctype="multipart/form-data">
+
+
+				<div class="form-group mb-3">
+					<label>재료명</label>
+					<div style="display: flex; gap: 10px;">
+						<input type="text" id="materialTitle" name="title"
+							th:value="${dto?.title}" class="form-control" required>
+						<button type="button" onclick="checkAllergy()"
+							class="btn btn-info text-white">알러지 정보 조회</button>
+					</div>
+				</div>
+
+				<div class="form-group mb-3">
+					<label>알러지 유발 물질</label> <input type="text" id="allergyInfo"
+						name="allergy" th:value="${dto?.allergy}" class="form-control"
+						placeholder="API 조회 시 자동 입력됩니다.">
+				</div>
+				<div class="form-group mb-3">
+					<label class="form-label" style="font-weight: bold;">재료 이미지</label>
+					<input type="file" name="file" class="form-control"
+						onchange="previewImage(this)">
+				</div>
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<label>제철 정보</label> <input type="text" name="season"
+							th:value="${dto?.season}" class="form-control">
+					</div>
+					<div class="col-md-4 mb-3">
+						<label>보관 온도</label> <input type="text" name="temperature"
+							th:value="${dto?.temperature}" class="form-control">
+					</div>
+					<div class="col-md-4 mb-3">
+						<label>칼로리(100g)</label> <input type="text" name="calories100g"
+							th:value="${dto?.calories100g}" class="form-control">
+					</div>
+				</div>
+				
+				<div class="form-group mb-3">
+					<label>효능/특징</label>
+					<textarea name="efficacy" class="form-control" rows="2"
+						th:text="${dto?.efficacy}"></textarea>
+				</div>
+
+				<div class="form-group mb-3">
+					<label>구입요령</label>
+					<textarea name="buyguide" class="form-control" rows="2"
+						th:text="${dto?.buyguide}"></textarea>
+				</div>
+
+				<div class="form-group mb-3">
+					<label>손질법</label>
+					<textarea name="trimguide" class="form-control" rows="2"
+						th:text="${dto?.trimguide}"></textarea>
+				</div>
+
+				<div class="form-group mb-4">
+					<label>보관법</label>
+					<textarea name="storeguide" class="form-control" rows="2"
+						th:text="${dto?.storeguide}"></textarea>
+				</div>
+				<div class="form-group mb-4">
+			    <label>카테고리</label>
+			    <select name="category" class="form-select">
+			        <option value="기타">카테고리 선택</option>
+			        <option value="채소">채소</option>
+			        <option value="과일">과일</option>
+			        <option value="육류">육류</option>
+			        <option value="수산물">수산물</option>
+			    </select>
+				</div>
+
+				<div class="text-center mb-5">
+					<button type="submit" class="btn btn-primary px-5">저장하기</button>
+					<a th:href="@{/material/materiallist}"
+						class="btn btn-secondary px-5">목록으로</a>
+				</div>
+			</form>
+		</div>
+
+		<script>
+		function checkAllergy() {
+		    const keyword = document.getElementById('materialTitle').value;
+		    if(!keyword) { alert("재료명을 먼저 입력해주세요."); return; }
+
+		    // /api/allergy 대신 /material/allergy 사용
+		    fetch(`/material/allergy?keyword=${encodeURIComponent(keyword)}`)
+		        .then(res => res.json())
+		        .then(data => {
+                // 식약처 API 응답 구조 파싱
+                if(data.body && data.body.items && data.body.items.length > 0) {
+                    const allergyData = data.body.items[0].item.allergy;
+                    if(allergyData) {
+                        document.getElementById('allergyInfo').value = allergyData;
+                        alert("정보를 성공적으로 가져왔습니다.");
+                    } else {
+                        alert("검색 결과는 있으나 알러지 유발 정보가 비어있습니다.");
+                    }
+                } else {
+                    alert("해당 제품명으로 검색된 알러지 정보가 없습니다.");
+                }
+                console.log(data);
+            })
+            .catch(err => alert("API 연동 중 에러가 발생했습니다."));
+    }
+    </script>
+	</div>
+</body>
+</html>
