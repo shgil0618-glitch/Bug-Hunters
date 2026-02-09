@@ -23,12 +23,11 @@
 | 김정민 | 팀원 | [깃허브 보기](https://github.com/kyoungsjjj0211/jeongmin001.git)    |
 ---
 
-<<<<<<< HEAD
 
 
 =======
 ## 📂 포트폴리오
-### “오늘 뭐 먹지?” 레시피 추천 사이트(1)
+### 🍟 “오늘 뭐 먹지?” 레시피 추천 사이트(1)
 
 | 항목 | 상세 내용 |
 | :--- | :--- |
@@ -37,7 +36,7 @@
 | **개발 환경 및 언어** | **Backend**: Java 11 (JDK 11), Spring Framework 4.3 (MVC, Security), MyBatis 3.5<br>**Database**: Oracle 11g<br>**Frontend**: HTML5 / CSS3, JavaScript (ES11), jQuery 3.7, Bootstrap 5 |
 | **깃허브** | [https://github.com/shgil0618-glitch/Bug-Hunters.git](https://github.com/shgil0618-glitch/Bug-Hunters/tree/master/project2) |
 
-
+### 🍟 “오늘 뭐 먹지?” 레시피 추천 사이트(2)
 | 항목 | 상세 내용 |
 | :--- | :--- |
 | **프로젝트명** | **“오늘 뭐 먹지?” 레시피 추천 서비스 (UGC)** |
