@@ -9,7 +9,7 @@
 | **프로젝트 목표** | **Spring Boot 및 JPA 기반의 사용자 참여형 웹 서비스 구축**<br>• UI/UX 향상 및 반응형 디자인 적용<br>• 소셜 로그인 및 External API 연동<br>• 검색 기능 강화 및 데이터 구조 최적화 |
 | **기간 / 인원** | 2025.12.18 ~ 2026.01.02 (4명) |
 | **개발 환경 및 언어** | **Backend**: Java 11, Spring Boot 2.7 (Security), JPA, MyBatis 3.5, RESTful API<br>**Database**: Oracle 11g<br>**Frontend**: HTML5, CSS3, Bootstrap 5, Thymeleaf<br>**Others**: JSON, External API |
-
+ 
 #### 🍟 주요기능	
 ```
 - 프로젝트(1)에서 UI/UX 향상 (CSS, 좋아요, 댓글, 경로 흐름)
