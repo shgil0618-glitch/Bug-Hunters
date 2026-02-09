@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+
+<div layout:fragment="content">
+
+    <!-- 알림 메시지 -->
+    <div th:if="${successMessage}" class="alert alert-info alert-dismissible fade show">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <h2 class="mb-4">회원가입</h2>
+
+    <form th:action="@{/users/join}" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="provider" value="local">
+
+        <!-- 이메일 -->
+        <div class="mb-3">
+            <label class="form-label">이메일</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+            <div class="iddouble_result"></div>
+        </div>
+
+        <!-- 비밀번호 -->
+        <div class="mb-3">
+            <label class="form-label">비밀번호</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+
+        <!-- 닉네임 -->
+        <div class="mb-3">
+            <label class="form-label">닉네임</label>
+            <input type="text" name="nickname" class="form-control" required>
+        </div>
+
+        <!-- 휴대폰 -->
+        <div class="mb-3">
+            <label class="form-label">휴대폰 번호</label>
+            <input type="text" name="mobile" class="form-control">
+        </div>
+
+        <!-- 🔥 주소 API -->
+        <div class="mb-3">
+            <label class="form-label">우편번호</label>
+            <div class="input-group">
+                <input type="text" id="postcode" name="postcode" class="form-control" readonly>
+                <button type="button" class="btn btn-outline-primary"
+                        onclick="execDaumPostcode()">우편번호 찾기</button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">주소</label>
+            <input type="text" id="address" name="address" class="form-control" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">상세주소</label>
+            <!-- ❗ null 허용 -->
+            <input type="text" id="detailAddress" name="detailAddress"
+                   class="form-control">
+        </div>
+
+        <!-- 프로필 -->
+        <div class="mb-3">
+            <label class="form-label">프로필 이미지</label>
+            <input type="file" name="file" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>
+
+    <p class="mt-3">
+        이미 계정이 있으신가요?
+        <a th:href="@{/users/login}">로그인</a>
+    </p>
+
+    <!-- ✅ JS는 반드시 fragment 안 맨 아래 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    document.getElementById("postcode").value = data.zonecode;
+                    document.getElementById("address").value = data.address;
+                    document.getElementById("detailAddress").focus();
+                }
+            }).open();
+        }
+    </script>
+
+    <!-- 이메일 중복체크 -->
+    <script>
+        $("#email").on("keyup", function () {
+            let email = $(this).val().trim();
+            if (!email) return;
+
+            $.get("iddouble", {email: email, provider: "local"}, function (res) {
+                $(".iddouble_result").html(
+                    res.cnt === 1
+                        ? "<span class='text-danger'>이미 사용중인 이메일입니다</span>"
+                        : "<span class='text-success'>사용 가능한 이메일입니다</span>"
+                );
+            });
+        });
+    </script>
+
+</div>
+</html>
