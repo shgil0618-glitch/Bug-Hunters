@@ -50,6 +50,7 @@
 ```
 ---
 #### 🍕 길상현
+[![Project Link](https://img.shields.io/badge/Project3-API-blue?style=for-the-badge&logo=github)](https://github.com/shgil0618-glitch/fullstack_gsh/tree/master/project/project2_springboot)
 ```
 - 권한별 UI 설계 및 템플릿 분할
  - Spring Security 기반 권한 구분, 헤더·네비게이션 동적 구성
