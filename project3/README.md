@@ -89,6 +89,7 @@
 ```
 ---
 #### 🍕 김영민
+[![Project Link](https://img.shields.io/badge/Project3-API-blue?style=for-the-badge&logo=github)](https://github.com/shgil0618-glitch/Bug-Hunters?tab=readme-ov-file)
 ```
 - 리뷰 및 계층형 댓글 시스템 구축  
   - `parent_id` 기반 셀프 참조(Self-Join) 구조 설계로 댓글·대댓글 기능 구현  
@@ -166,6 +167,11 @@ API 사용이 처음엔 두려웠으나, 특징을 이해하니 편리함을 알
 ```
 #### 김영민
 ```
+- 프로젝트에서 서로 협업하면서 새로운 작품을 하나 만드는 것이
+얼마나 힘든 일인지 알게 되는 시간이었던 거 같습니다.
+문제가 생기면 어디에서 에러가 난 것인지 찾아내는 것이 가장 힘들었지만,
+머리를 맞대어 문제를 해결해 나아갈 때 협업력이 더 증가하는 거 같아 
+좋은 시간이 되었던 거 같습니다.
 ```
 
 
