@@ -7,7 +7,7 @@
 | :--- | :--- |
 | **프로젝트명** | **“오늘 뭐 먹지?” 레시피 추천 서비스 (UGC)** |
 | **프로젝트 목표** | **Spring boot와 JPA 기반의 UGC형 웹 서비스 구축 프로젝트**<br>• React UI, JWT 인증, Redis 캐싱, Chart.js 시각화, API 연동 |
-| **기간 / 인원** | 2025.12.18 ~ 2026.01.02 (2명) |
+| **기간 / 인원** | 2025.01.03 ~ 2026.01.19 (2명) |
 | **개발 환경 및 언어** | **Backend**: Java 11 (JDK 11), Spring Boot 3.4 (MVC, Security), JPA, MyBatis 3.5, Restful API<br>**Database**: Oracle 11g, Redis (캐싱 및 세션 관리)<br>**Frontend**: React, Ant Design (Antd), Chart.js <br>**Others**: Node.js, External API, JWT 인증 |
 | **깃허브** | https://github.com/shgil0618-glitch/Bug-Hunters/tree/master/project4 |
 
