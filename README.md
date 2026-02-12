@@ -22,6 +22,19 @@
 | 김정민 | 팀원 | [깃허브 보기](https://github.com/kyoungsjjj0211/jeongmin001.git)    |
 ---
 ## 📂 포트폴리오
+### 🍟 "오늘 어디서 먹지?" 맛집 공유 사이트(mini)
+| 항목 | 상세 내용 |
+| :--- | :--- |
+| **프로젝트명** | **“오늘 뭐 먹지?” 레시피 추천 서비스 (UGC)** |
+| **프로젝트 목표** | **Spring boot와 JPA 기반의 UGC형 웹 서비스 구축 프로젝트**<br>• React UI, JWT 인증, Redis 캐싱, Chart.js 시각화, API 연동 |
+| **기간 / 인원** | 2025.12.18 ~ 2026.01.02 (2명) |
+| **개발 환경 및 언어** | **Backend**: Java 11 (JDK 11), Spring Boot 3.4 (MVC, Security), JPA, MyBatis 3.5, Restful API<br>**Database**: Oracle 11g, Redis (캐싱 및 세션 관리)<br>**Frontend**: React, Ant Design (Antd), Chart.js <br>**Others**: Node.js, External API, JWT 인증 |
+| **깃허브** | https://github.com/shgil0618-glitch/Bug-Hunters/tree/master/project4 |
+
+<br>
+
+---
+
 ### 🍟 “오늘 뭐 먹지?” 레시피 추천 사이트(2)
 | 항목 | 상세 내용 |
 | :--- | :--- |
@@ -33,11 +46,13 @@
 
 <br>
 
+---
+
 ### 🍟 “오늘 뭐 먹지?” 레시피 추천 사이트(1)
 
 | 항목 | 상세 내용 |
 | :--- | :--- |
-| **프로젝트 목표** | Spring·MyBatis 기반의 UGC 웹 서비스 구축 (CRUD, 권한별 UI, AJAX 페이징, SQL 최적화) |
+| **프로젝트 목표** | **Spring·MyBatis 기반의 UGC 웹 서비스 구축 (CRUD, 권한별 UI, AJAX 페이징, SQL 최적화)** |
 | **기간 / 인원** | 2025.11.2 ~ 2025.12.3 (3명) |
 | **개발 환경 및 언어** | **Backend**: Java 11 (JDK 11), Spring Framework 4.3 (MVC, Security), MyBatis 3.5<br>**Database**: Oracle 11g<br>**Frontend**: HTML5 / CSS3, JavaScript (ES11), jQuery 3.7, Bootstrap 5 |
 | **깃허브** | https://github.com/shgil0618-glitch/Bug-Hunters/tree/master/project2 |
