@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.thejoa703.repository.MaterialRepository">
+
+    <insert id="save" parameterType="com.thejoa703.domain.Material">
+    INSERT INTO material4 (
+        materialid, title, imageurl, allergy, season, 
+        temperature, calories100g, efficacy, buyguide, 
+        trimguide, storeguide, category, created_at, updated_at
+    ) VALUES (
+        material4_seq.nextval, 
+        #{title, jdbcType=VARCHAR}, 
+        #{imageurl, jdbcType=VARCHAR}, 
+        #{allergy, jdbcType=VARCHAR}, 
+        #{season, jdbcType=VARCHAR},
+        #{temperature, jdbcType=VARCHAR}, 
+        #{calories100g, jdbcType=VARCHAR}, 
+        #{efficacy, jdbcType=VARCHAR}, 
+        #{buyguide, jdbcType=VARCHAR},
+        #{trimguide, jdbcType=VARCHAR}, 
+        #{storeguide, jdbcType=VARCHAR}, 
+        #{category, jdbcType=VARCHAR}, 
+        sysdate, 
+        sysdate
+    )
+</insert>
+
+    <update id="update" parameterType="com.thejoa703.domain.Material">
+    UPDATE material4 
+    SET title = #{title, jdbcType=VARCHAR}, 
+        imageurl = #{imageurl, jdbcType=VARCHAR},
+        allergy = #{allergy, jdbcType=VARCHAR},
+        season = #{season, jdbcType=VARCHAR},
+        temperature = #{temperature, jdbcType=VARCHAR},
+        calories100g = #{calories100g, jdbcType=VARCHAR},
+        efficacy = #{efficacy, jdbcType=VARCHAR},
+        buyguide = #{buyguide, jdbcType=VARCHAR},
+        trimguide = #{trimguide, jdbcType=VARCHAR},
+        storeguide = #{storeguide, jdbcType=VARCHAR},
+        category = #{category, jdbcType=VARCHAR},
+        updated_at = sysdate
+    WHERE materialid = #{materialid}
+</update>
+
+    <delete id="deleteById">
+        DELETE FROM material4 WHERE materialid = #{materialid}
+    </delete>
+
+    <select id="findAll" parameterType="map" resultType="com.thejoa703.domain.Material">
+        SELECT * FROM (
+            SELECT ROWNUM AS rnum, m.* FROM (
+                SELECT * FROM material4 
+                WHERE title LIKE '%' || #{keyword} || '%'
+                ORDER BY created_at DESC
+            ) m
+        ) WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="countAll" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM material4 WHERE title LIKE '%' || #{keyword} || '%'
+    </select>
+
+    <select id="findById" resultType="com.thejoa703.domain.Material">
+        SELECT * FROM material4 WHERE materialid = #{materialid}
+    </select>
+
+    <insert id="insertTrend" parameterType="map">
+        INSERT INTO material_trends (
+            trend_id, material_id, keyword, period_data, last_updated
+        ) VALUES (
+            trend_seq.nextval, #{materialId}, #{keyword}, #{periodData}, sysdate
+        )
+    </insert>
+
+</mapper>
