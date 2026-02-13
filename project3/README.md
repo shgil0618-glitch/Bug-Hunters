@@ -89,7 +89,7 @@
 ```
 ---
 #### 🍕 김영민
-[![Project Link](https://img.shields.io/badge/Project3-API-blue?style=for-the-badge&logo=github)](https://github.com/shgil0618-glitch/Bug-Hunters?tab=readme-ov-file)
+[![Notion](https://img.shields.io/badge/Notion-바로가기-black?logo=notion)](https://vivacious-error-62f.notion.site/302312c1c95c80c59f9feeedd8da3275?source=copy_link)
 ```
 - 리뷰 및 계층형 댓글 시스템 구축  
   - `parent_id` 기반 셀프 참조(Self-Join) 구조 설계로 댓글·대댓글 기능 구현  
